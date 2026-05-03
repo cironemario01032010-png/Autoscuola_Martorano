@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Dashboard Slot</title>
+
+    <style>
+        :root {
+            --primary: #004aad;
+            --primary-dark: #003080;
+            --accent: #ff6f00;
+            --green: #28a745;
+            --orange: #fd7e14;
+            --red: #dc3545;
+            --bg: #f0f4ff;
+            --card-bg: #ffffff;
+            --border: #d0d8e8;
+            --text: #1a1a2e;
+            --muted: #6c757d;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 74, 173, 0.97);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+        }
+
+        .nav-left h1 { margin: 0; font-size: 1.1rem; }
+
+        #search-container { position: relative; margin-top: 4px; }
+
+        #search-input {
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: none;
+            font-size: 13px;
+            width: 200px;
+            outline: none;
+        }
+
+        #search-results {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            list-style: none;
+            margin: 4px 0 0;
+            padding: 4px 0;
+            width: 100%;
+            z-index: 200;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        #search-results.active { display: block; }
+
+        #search-results li {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        #search-results li:hover { background: var(--bg); }
+
+        .nav-links {
+            display: flex;
+            gap: 14px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: white; }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 22px;
+            user-select: none;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 18px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
+        }
+
+        .toast.success { background: var(--green); }
+        .toast.error   { background: var(--red); }
+        .toast.info    { background: var(--primary); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to   { transform: translateX(0);    opacity: 1; }
+        }
+
+        main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+
+        .stats-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+
+        .stat-card {
+            flex: 1;
+            min-width: 120px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 14px 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .stat-card .stat-number { font-size: 1.8rem; font-weight: bold; color: var(--primary); }
+        .stat-card .stat-label  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .form-card h2 { margin: 0 0 14px; color: var(--primary); font-size: 1.1rem; }
+
+        .form-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        .form-group label { font-size: 12px; color: var(--muted); font-weight: bold; }
+
+        .form-group input {
+            padding: 8px 10px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus { border-color: var(--primary); }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary   { background: var(--primary); color: white; }
+        .btn-primary:hover   { background: var(--primary-dark); }
+        .btn-danger    { background: var(--red);     color: white; }
+        .btn-danger:hover    { background: #b02a37; }
+        .btn-warning   { background: var(--orange);  color: white; }
+        .btn-warning:hover   { background: #d96300; }
+        .btn-success   { background: var(--green);   color: white; }
+        .btn-success:hover   { background: #1e7e34; }
+        .btn-secondary { background: #6c757d;        color: white; }
+        .btn-secondary:hover { background: #545b62; }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .filter-bar label { font-size: 13px; color: var(--muted); font-weight: bold; }
+
+        .filter-bar select,
+        .filter-bar input[type="date"] {
+            padding: 7px 10px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+            outline: none;
+            background: var(--card-bg);
+        }
+
+        .slot-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .slot-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        .slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .slot-title { font-size: 1rem; font-weight: bold; color: var(--text); }
+        .slot-meta  { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+
+        .slot-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-open   { background: #d4edda; color: #155724; }
+        .status-full   { background: #fff3cd; color: #856404; }
+        .status-closed { background: #f8d7da; color: #721c24; }
+
+        .progress-wrap {
+            background: #e9ecef;
+            border-radius: 20px;
+            height: 8px;
+            margin: 8px 0 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar { height: 100%; border-radius: 20px; transition: width 0.4s ease; }
+        .progress-green  { background: var(--green); }
+        .progress-orange { background: var(--orange); }
+        .progress-red    { background: var(--red); }
+
+        .bookings-box {
+            display: none;
+            margin-top: 10px;
+            background: #eef3ff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .bookings-box .bookings-header {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .booking-row {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .booking-row:last-child { margin-bottom: 0; }
+
+        .booking-user-info { display: flex; flex-direction: column; gap: 4px; }
+
+        .booking-username {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .booking-contact { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .contact-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .contact-chip:hover { opacity: 0.8; }
+        .chip-phone   { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+        .chip-email   { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
+        .chip-wa      { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+        .chip-missing { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; font-style: italic; }
+
+        .btn-remove {
+            padding: 5px 11px;
+            font-size: 11px;
+            border: none;
+            border-radius: 5px;
+            background: var(--red);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            white-space: nowrap;
+            align-self: center;
+        }
+
+        .btn-remove:hover { background: #b02a37; }
+
+        .edit-panel {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .edit-panel input {
+            padding: 7px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .notify-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: #fffbf0;
+            border: 1px solid #ffe082;
+            border-radius: 7px;
+            flex-wrap: wrap;
+        }
+
+        .notify-options label { font-size: 12px; color: #5d4037; font-weight: bold; }
+
+        .notify-options .notify-check {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .notify-options input[type="checkbox"] { cursor: pointer; }
+
+        .notify-hint { font-size: 11px; color: var(--muted); margin-top: 4px; width: 100%; }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .dashboard-header h2 { margin: 0; color: var(--primary); }
+
+        .logout-link {
+            display: inline-block;
+            margin: 24px 0;
+            color: var(--red);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .logout-link:hover { text-decoration: underline; }
+
+        .empty-state { text-align: center; padding: 40px; color: var(--muted); }
+        .empty-state span { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+
+        .wa-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .wa-modal-box {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            max-width: 520px;
+            width: 92%;
+            max-height: 82vh;
+            overflow-y: auto;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            animation: slideUp 0.25s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+
+        .wa-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .wa-modal-header h3 { margin: 0; color: var(--primary); font-size: 1rem; }
+
+        .wa-modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #666;
+            line-height: 1;
+            padding: 0 4px;
+        }
+
+        .wa-modal-hint {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 14px;
+            padding: 8px 10px;
+            background: #fffbf0;
+            border-radius: 6px;
+            border-left: 3px solid #ffe082;
+        }
+
+        .wa-user-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: #f0faf0;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .wa-user-row:last-of-type { margin-bottom: 0; }
+        .wa-user-info { display: flex; flex-direction: column; gap: 2px; }
+        .wa-user-info strong { font-size: 13px; color: var(--text); }
+        .wa-user-info span   { font-size: 12px; color: var(--muted); }
+
+        .btn-wa {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #25D366;
+            color: white;
+            padding: 7px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .btn-wa:hover { background: #1ebe5d; }
+
+        .wa-modal-footer { margin-top: 14px; display: flex; justify-content: flex-end; }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                background: var(--primary);
+                height: 100%;
+                flex-direction: column;
+                width: 200px;
+                padding: 60px 20px 20px;
+                transition: 0.3s;
+                z-index: 150;
+            }
+
+            .nav-links.active { right: 0; }
+            .hamburger  { display: block; }
+            .stats-bar  { gap: 8px; }
+            .stat-card  { min-width: 80px; }
+            .form-row   { flex-direction: column; }
+        }
+
+        /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255, 255, 255, 0.55);
+      padding: 40px 20px 28px;
+      font-size: 0.875rem;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      display: block;
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      /* Filtro per adattare il logo allo sfondo scuro */
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      transition: opacity 0.25s;
+    }
+
+    .footer-logo:hover { opacity: 0.85; }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .footer-copyright { text-align: center; }
+    .footer-copyright span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .why-card:nth-child(1) { animation-delay: 0.04s; }
+    .why-card:nth-child(2) { animation-delay: 0.10s; }
+    .why-card:nth-child(3) { animation-delay: 0.16s; }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-wrap { padding: 24px 20px; }
+      .hero { padding: 80px 20px 90px; }
+      .footer-logo { height: 52px; }
+    }
+    </style>
+</head>
+
+<body>
+
+    <div id="toast-container"></div>
+
+    <header>
+        <div class="navbar">
+            <div class="nav-left">
+                <h1>🚗 Autoscuola Martorano</h1>
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Cerca patenti o pagine...">
+                    <ul id="search-results"></ul>
+                </div>
+            </div>
+
+            <div class="hamburger" id="hamburger">☰</div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('corsi') }}">Corsi</a></li>
+                <li><a href="{{ url_for('CQC') }}">CQC</a></li>
+                <li><a href="{{ url_for('chi_siamo') }}">Chi siamo</a></li>
+                <li><a href="{{ url_for('patenti') }}">Patenti</a></li>
+                <li><a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contatti') }}">Contatti</a></li>
+                <li><a href="{{ url_for('servizisupatente') }}">Servizi</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number" id="stat-total">–</div>
+                <div class="stat-label">Slot totali</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-open" style="color:var(--green)">–</div>
+                <div class="stat-label">Aperti</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-full" style="color:var(--orange)">–</div>
+                <div class="stat-label">Pieni</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-closed" style="color:var(--red)">–</div>
+                <div class="stat-label">Chiusi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-booked" style="color:var(--primary)">–</div>
+                <div class="stat-label">Prenotazioni totali</div>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2>➕ Crea nuovo slot</h2>
+            <form onsubmit="createSlot(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Orario</label>
+                        <input type="time" id="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Max persone</label>
+                        <input type="number" id="max_people" value="15" min="1" max="100" style="width:90px" required>
+                    </div>
+                    <div class="form-group" style="justify-content:flex-end">
+                        <button type="submit" class="btn btn-primary">➕ Crea Slot</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="dashboard-header">
+            <h2>📋 Dashboard Slot</h2>
+            <button class="btn btn-success" onclick="exportAllCSV()">📥 Esporta tutto CSV</button>
+        </div>
+
+        <div class="filter-bar">
+            <label>Filtra:</label>
+            <select id="filter-status" onchange="applyFilters()">
+                <option value="all">Tutti gli stati</option>
+                <option value="open">Aperti</option>
+                <option value="full">Pieni</option>
+                <option value="closed">Chiusi</option>
+            </select>
+            <input type="date" id="filter-date" onchange="applyFilters()" title="Filtra per data">
+            <button class="btn btn-secondary" onclick="resetFilters()">✖ Reset filtri</button>
+        </div>
+
+        <div id="slots-container"></div>
+
+        <a href="{{ url_for('logout') }}" class="logout-link">🚪 Logout</a>
+
+    </main>
+
+      <!-- ── FOOTER ── -->
+  <footer>
+
+    <div class="footer-inner">
+      <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+        <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano" class="footer-logo">
+      </a>
+      <div class="footer-links">
+        <a href="{{ url_for('corsi') }}">Corsi</a>
+        <a href="{{ url_for('CQC') }}">CQC</a>
+        <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+        <a href="{{ url_for('patenti') }}">Patenti</a>
+        <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+        <a href="{{ url_for('blog') }}">Blog</a>
+        <a href="{{ url_for('contatti') }}">Contatti</a>
+        <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+    </div>
+  </footer>
+
+    <script>
+        // Token CSRF iniettato da Jinja2
+        const CSRF_TOKEN = "{{ csrf_token() }}";
+
+        // Helper centralizzato: aggiunge automaticamente CSRF + credentials a ogni fetch
+        function fetchWithCSRF(url, options = {}) {
+            const method = (options.method || 'GET').toUpperCase();
+            if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+                options.headers = Object.assign({}, options.headers, {
+                    'X-CSRF-Token': CSRF_TOKEN
+                });
+            }
+            options.credentials = 'include';
+            return fetch(url, options);
+        }
+
+        let allSlots = [];
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        async function createSlot(event) {
+            event.preventDefault();
+            const date       = document.getElementById('date').value;
+            const time       = document.getElementById('time').value;
+            const max_people = parseInt(document.getElementById('max_people').value);
+
+            if (!date || !time || !max_people || max_people < 1) {
+                showToast("Inserisci dati validi", "error");
+                return;
+            }
+
+            try {
+                const res = await fetchWithCSRF('/create-slot', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ date, time, max_people })
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) { showToast(data.error || "Errore creazione slot", "error"); return; }
+                showToast(data.message || "Slot creato", "success");
+                event.target.reset();
+                loadSlots();
+            } catch {
+                showToast("Errore di connessione al server", "error");
+            }
+        }
+
+        async function loadSlots() {
+            try {
+                const res  = await fetchWithCSRF('/slots');
+                const data = await res.json().catch(() => []);
+
+                if (!res.ok) { showToast(data.error || "Errore caricamento slot", "error"); return; }
+
+                allSlots = data;
+                updateStats(allSlots);
+                applyFilters();
+            } catch {
+                showToast("Errore caricamento slot", "error");
+            }
+        }
+
+        function updateStats(slots) {
+            document.getElementById("stat-total").textContent  = slots.length;
+            document.getElementById("stat-open").textContent   = slots.filter(s => !s.closed && s.booked < s.max_people).length;
+            document.getElementById("stat-full").textContent   = slots.filter(s => !s.closed && s.booked >= s.max_people).length;
+            document.getElementById("stat-closed").textContent = slots.filter(s => s.closed).length;
+            document.getElementById("stat-booked").textContent = slots.reduce((acc, s) => acc + s.booked, 0);
+        }
+
+        function applyFilters() {
+            const statusFilter = document.getElementById("filter-status").value;
+            const dateFilter   = document.getElementById("filter-date").value;
+
+            const filtered = allSlots.filter(slot => {
+                const matchStatus = statusFilter === "all" || getStatusKey(slot) === statusFilter;
+                const matchDate   = !dateFilter || slot.date === dateFilter;
+                return matchStatus && matchDate;
+            });
+
+            renderSlots(filtered);
+        }
+
+        function resetFilters() {
+            document.getElementById("filter-status").value = "all";
+            document.getElementById("filter-date").value   = "";
+            renderSlots(allSlots);
+        }
+
+        function renderSlots(slots) {
+            const container = document.getElementById("slots-container");
+            container.innerHTML = "";
+
+            if (slots.length === 0) {
+                container.innerHTML = `<div class="empty-state"><span>📭</span>Nessuno slot trovato con i filtri selezionati.</div>`;
+                return;
+            }
+
+            slots.forEach(slot => {
+                const pct         = slot.max_people > 0 ? Math.round((slot.booked / slot.max_people) * 100) : 0;
+                const barClass    = pct >= 100 ? "progress-red" : pct >= 70 ? "progress-orange" : "progress-green";
+                const toggleLabel = slot.closed ? "🔓 Apri slot" : "🔒 Chiudi slot";
+                const toggleClass = slot.closed ? "btn-success"  : "btn-warning";
+
+                const div = document.createElement("div");
+                div.classList.add("slot-card");
+
+                div.innerHTML = `
+                    <div class="slot-header">
+                        <span class="slot-title">📅 ${slot.date} — 🕐 ${slot.time}</span>
+                        <span class="status-badge ${getStatusClass(slot)}">${getStatus(slot)}</span>
+                    </div>
+                    <div class="slot-meta">
+                        👥 Prenotati: <b>${slot.booked}</b> / ${slot.max_people} &nbsp;(${pct}%)
+                    </div>
+                    <div class="progress-wrap">
+                        <div class="progress-bar ${barClass}" style="width:${Math.min(pct, 100)}%"></div>
+                    </div>
+                    <div class="slot-actions">
+                        <button class="btn btn-primary"   onclick="toggleEdit(${slot.id})">✏️ Modifica</button>
+                        <button class="btn btn-danger"    onclick="deleteSlot(${slot.id}, '${slot.date}', '${slot.time}')">🗑️ Elimina</button>
+                        <button class="btn ${toggleClass}" onclick="toggleSlot(${slot.id})">${toggleLabel}</button>
+                        <button class="btn btn-secondary" onclick="loadBookings(${slot.id})">👁️ Vedi prenotati</button>
+                        <button class="btn btn-success"   onclick="exportSlotCSV(${slot.id}, '${slot.date}', '${slot.time}')">📥 CSV</button>
+                    </div>
+
+                    <div class="bookings-box" id="bookings-${slot.id}">
+                        <div class="bookings-header">👤 Prenotati per questo slot:</div>
+                        <div id="bookings-list-${slot.id}"></div>
+                    </div>
+
+                    <div class="edit-panel" id="edit-${slot.id}">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Data</label>
+                                <input type="date" id="date-${slot.id}" value="${slot.date}">
+                            </div>
+                            <div class="form-group">
+                                <label>Orario</label>
+                                <input type="time" id="time-${slot.id}" value="${slot.time}">
+                            </div>
+                            <div class="form-group">
+                                <label>Max persone</label>
+                                <input type="number" id="max-${slot.id}" value="${slot.max_people}" min="1" max="100" style="width:80px">
+                            </div>
+                            <div class="form-group" style="justify-content:flex-end">
+                                <button class="btn btn-primary" onclick="saveEdit(${slot.id}, '${slot.date}', '${slot.time}')">💾 Salva</button>
+                            </div>
+                        </div>
+                        <div class="notify-options">
+                            <label>📣 Notifica utenti:</label>
+                            <label class="notify-check">
+                                <input type="checkbox" id="notify-email-${slot.id}" checked> ✉️ Email
+                            </label>
+                            <label class="notify-check">
+                                <input type="checkbox" id="notify-wa-${slot.id}" checked> 💬 WhatsApp
+                            </label>
+                            <span class="notify-hint">Gli utenti prenotati riceveranno una notifica della modifica.</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(div);
+            });
+        }
+
+        function getStatusKey(slot) {
+            if (slot.closed) return "closed";
+            if (slot.booked >= slot.max_people) return "full";
+            return "open";
+        }
+
+        function getStatus(slot) {
+            if (slot.closed) return "Chiuso";
+            if (slot.booked >= slot.max_people) return "Pieno";
+            return "Aperto";
+        }
+
+        function getStatusClass(slot) {
+            if (slot.closed) return "status-closed";
+            if (slot.booked >= slot.max_people) return "status-full";
+            return "status-open";
+        }
+
+        function toggleEdit(id) {
+            const el = document.getElementById(`edit-${id}`);
+            if (!el) return;
+            el.style.display = el.style.display === "block" ? "none" : "block";
+        }
+
+        async function saveEdit(id, oldDate, oldTime) {
+            const date        = document.getElementById(`date-${id}`).value;
+            const time        = document.getElementById(`time-${id}`).value;
+            const max_people  = parseInt(document.getElementById(`max-${id}`).value);
+            const notifyEmail = document.getElementById(`notify-email-${id}`)?.checked ?? true;
+            const notifyWa    = document.getElementById(`notify-wa-${id}`)?.checked ?? true;
+
+            if (!date || !time || !max_people || max_people < 1) {
+                showToast("Inserisci dati validi", "error");
+                return;
+            }
+
+            try {
+                const res = await fetchWithCSRF(`/update-slot/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        date, time, max_people,
+                        notify_email: notifyEmail,
+                        notify_wa:    notifyWa,
+                        old_date:     oldDate,
+                        old_time:     oldTime
+                    })
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) { showToast(data.error || "Errore modifica", "error"); return; }
+
+                showToast(data.message || "Slot aggiornato", "success");
+
+                if (data.notify_sent > 0)
+                    showToast(`✉️ Email inviate a ${data.notify_sent} utenti`, "info");
+
+                if (notifyWa && data.wa_links && data.wa_links.length > 0)
+                    showWaModal(data.wa_links, `Modifica slot ${date} ${time}`);
+
+                loadSlots();
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        async function deleteSlot(id, date, time) {
+            if (!confirm(`Eliminare lo slot del ${date} alle ${time}?\nGli utenti prenotati riceveranno una notifica via email.`)) return;
+
+            try {
+                const res = await fetchWithCSRF(`/delete-slot/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) { showToast(data.error || "Errore eliminazione", "error"); return; }
+
+                showToast(data.message || "Slot eliminato", "success");
+
+                if (data.notify_sent > 0)
+                    showToast(`✉️ Email inviate a ${data.notify_sent} utenti`, "info");
+
+                if (data.wa_links && data.wa_links.length > 0)
+                    showWaModal(data.wa_links, `Cancellazione slot ${date} ${time}`);
+
+                loadSlots();
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        function showWaModal(waLinks, title) {
+            document.getElementById('wa-modal')?.remove();
+
+            const linksHtml = waLinks.map(u => `
+                <div class="wa-user-row">
+                    <div class="wa-user-info">
+                        <strong>👤 ${u.username}</strong>
+                        <span>📞 ${u.phone}</span>
+                    </div>
+                    <a href="${u.wa_link}" target="_blank" rel="noopener" class="btn-wa">
+                        💬 Apri WhatsApp
+                    </a>
+                </div>
+            `).join('');
+
+            const modal = document.createElement('div');
+            modal.id        = 'wa-modal';
+            modal.className = 'wa-modal-overlay';
+
+            modal.innerHTML = `
+                <div class="wa-modal-box">
+                    <div class="wa-modal-header">
+                        <h3>💬 Notifica WhatsApp</h3>
+                        <button class="wa-modal-close" onclick="document.getElementById('wa-modal').remove()">✕</button>
+                    </div>
+                    <div class="wa-modal-hint">
+                        📌 <b>${title}</b><br>
+                        Il messaggio è già precompilato. Clicca su ogni utente per aprire WhatsApp e inviarlo con un tap.
+                    </div>
+                    ${linksHtml}
+                    <div class="wa-modal-footer">
+                        <button class="btn btn-secondary" onclick="document.getElementById('wa-modal').remove()">
+                            Chiudi
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.addEventListener('click', e => {
+                if (e.target === modal) modal.remove();
+            });
+
+            document.body.appendChild(modal);
+        }
+
+        async function toggleSlot(id) {
+            try {
+                const res = await fetchWithCSRF(`/toggle-slot/${id}`, {
+                    method: 'PUT'
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) { showToast(data.error || "Errore toggle slot", "error"); return; }
+                showToast(data.message || "Stato aggiornato", "info");
+                loadSlots();
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        async function loadBookings(slotId) {
+            const box  = document.getElementById(`bookings-${slotId}`);
+            const list = document.getElementById(`bookings-list-${slotId}`);
+
+            if (box.style.display === "block") {
+                box.style.display = "none";
+                return;
+            }
+
+            try {
+                const res  = await fetchWithCSRF(`/slot-bookings/${slotId}`);
+                const data = await res.json().catch(() => []);
+
+                if (!res.ok) { showToast(data.error || "Errore caricamento prenotati", "error"); return; }
+
+                list.innerHTML = "";
+
+                if (data.length === 0) {
+                    list.innerHTML = `<div style="font-size:13px; color:var(--muted); padding:6px 0;"><i>Nessun prenotato</i></div>`;
+                } else {
+                    data.forEach(entry => {
+                        const row       = document.createElement("div");
+                        row.className   = "booking-row";
+                        row.id          = `booking-row-${entry.booking_id}`;
+
+                        const phoneChip = entry.phone && entry.phone !== "-"
+                            ? `<a href="tel:${entry.phone}" class="contact-chip chip-phone" title="Chiama">📞 ${entry.phone}</a>
+                               <a href="https://wa.me/${entry.phone.replace(/\D/g,'')}" target="_blank" rel="noopener" class="contact-chip chip-wa" title="Apri WhatsApp">💬 WhatsApp</a>`
+                            : `<span class="contact-chip chip-missing">📞 N/D</span>`;
+
+                        const emailChip = entry.email && entry.email !== "-"
+                            ? `<a href="mailto:${entry.email}" class="contact-chip chip-email" title="Invia email">✉️ ${entry.email}</a>`
+                            : `<span class="contact-chip chip-missing">✉️ N/D</span>`;
+
+                        row.innerHTML = `
+                            <div class="booking-user-info">
+                                <div class="booking-username">👤 ${entry.username}</div>
+                                <div class="booking-contact">
+                                    ${phoneChip}
+                                    ${emailChip}
+                                </div>
+                            </div>
+                            <button class="btn-remove" onclick="adminCancelBooking(${entry.booking_id}, ${slotId})">
+                                ✖ Rimuovi
+                            </button>
+                        `;
+
+                        list.appendChild(row);
+                    });
+                }
+
+                box.style.display = "block";
+
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        async function adminCancelBooking(bookingId, slotId) {
+            if (!confirm("Rimuovere la prenotazione di questo utente?")) return;
+
+            try {
+                const res = await fetchWithCSRF(`/admin-cancel-booking/${bookingId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (!res.ok) { showToast(data.error || "Errore rimozione", "error"); return; }
+
+                showToast(data.message || "Prenotazione rimossa", "success");
+
+                const row = document.getElementById(`booking-row-${bookingId}`);
+                if (row) row.remove();
+
+                loadSlots();
+
+                const box = document.getElementById(`bookings-${slotId}`);
+                if (box) box.style.display = "none";
+
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        async function exportSlotCSV(id, date, time) {
+            try {
+                const res  = await fetchWithCSRF(`/slot-bookings/${id}`);
+                const data = await res.json().catch(() => []);
+
+                if (!res.ok) { showToast("Errore nel recupero prenotati per CSV", "error"); return; }
+
+                let csv = "Username,Telefono,Email\n";
+                if (data.length === 0) {
+                    csv += "Nessun prenotato,,\n";
+                } else {
+                    data.forEach(e => {
+                        csv += `${e.username},${e.phone},${e.email}\n`;
+                    });
+                }
+
+                downloadCSV(csv, `slot_${date}_${time.replace(":", "-")}.csv`);
+                showToast("CSV esportato", "success");
+            } catch {
+                showToast("Errore esportazione CSV", "error");
+            }
+        }
+
+        function exportAllCSV() {
+            if (allSlots.length === 0) { showToast("Nessuno slot da esportare", "error"); return; }
+
+            let csv = "Data,Orario,Max persone,Prenotati,Stato\n";
+            allSlots.forEach(s => {
+                csv += `${s.date},${s.time},${s.max_people},${s.booked},${getStatus(s)}\n`;
+            });
+
+            downloadCSV(csv, "slots_export.csv");
+            showToast("Export CSV completato", "success");
+        }
+
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement("a");
+            a.href     = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            loadSlots();
+
+            const hamburger = document.getElementById("hamburger");
+            const navLinks  = document.getElementById("nav-links");
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle("active");
+                });
+                document.addEventListener("click", (e) => {
+                    if (!navLinks.contains(e.target) && !hamburger.contains(e.target))
+                        navLinks.classList.remove("active");
+                });
+            }
+
+            const searchInput   = document.getElementById("search-input");
+            const searchResults = document.getElementById("search-results");
+
+            if (searchInput) {
+                const pages = [
+                    { title: "Patente AM",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente A1",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente A2",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente A",      url: "{{ url_for('patenti') }}" },
+                    { title: "Patente B1",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente B",      url: "{{ url_for('patenti') }}" },
+                    { title: "Patente B96",    url: "{{ url_for('patenti') }}" },
+                    { title: "Patente BE",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente KB",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente C1",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente C1E",    url: "{{ url_for('patenti') }}" },
+                    { title: "Patente C",      url: "{{ url_for('patenti') }}" },
+                    { title: "Patente D1",     url: "{{ url_for('patenti') }}" },
+                    { title: "Patente D1E",    url: "{{ url_for('patenti') }}" },
+                    { title: "Patente D",      url: "{{ url_for('patenti') }}" },
+                    { title: "Corsi CQC",      url: "{{ url_for('CQC') }}" },
+                    { title: "Contatti",       url: "{{ url_for('contatti') }}" },
+                    { title: "Chi siamo",      url: "{{ url_for('chi_siamo') }}" },
+                    { title: "Parlano di noi", url: "{{ url_for('parlanodinoi') }}" },
+                ];
+
+                searchInput.addEventListener("input", () => {
+                    const query = searchInput.value.toLowerCase();
+                    searchResults.innerHTML = "";
+                    if (!query) { searchResults.classList.remove("active"); return; }
+                    const filtered = pages.filter(p => p.title.toLowerCase().includes(query));
+                    filtered.forEach(p => {
+                        const li = document.createElement("li");
+                        li.textContent = p.title;
+                        li.onclick = () => window.location.href = p.url;
+                        searchResults.appendChild(li);
+                    });
+                    searchResults.classList.toggle("active", filtered.length > 0);
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchInput.contains(e.target)) searchResults.classList.remove("active");
+                });
+            }
+
+            window.addEventListener("scroll", () => {
+                const header = document.querySelector("header");
+                if (header) header.classList.toggle("shrink", window.scrollY > 50);
+            });
+        });
+    </script>
+
+</body>
+</html>

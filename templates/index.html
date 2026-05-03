@@ -1,0 +1,1208 @@
+Creating the improved index.html with SEO optimization, missing license plates, and logo in footer
+html
+
+<!DOCTYPE html>
+<html lang="it" itemscope itemtype="https://schema.org/DrivingSchool">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autoscuola Martorano | Patente A, B, C, D, AM – Corsi e CQC</title>
+  <meta name="description"
+    content="Autoscuola Martorano: corsi per patente AM, A1, A2, A, B, C, D e CQC. Istruttori certificati, alta percentuale di promossi. Prenota la tua prima lezione oggi stesso.">
+  <meta name="keywords" content="autoscuola, patente B, patente A, patente AM, patente A1, patente A2, patente C, patente D, CQC, autoscuola Martorano, scuola guida, corso patente">
+  <meta name="author" content="Autoscuola Martorano">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.autoscuolamartorano.it/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Autoscuola Martorano | Patente A, B, C, D, AM – Corsi e CQC">
+  <meta property="og:description" content="Diventa un guidatore sicuro con istruttori certificati. Corsi per tutte le categorie di patente.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.autoscuolamartorano.it/">
+  <meta property="og:locale" content="it_IT">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Autoscuola Martorano | Patente A, B, C, D, AM">
+  <meta name="twitter:description" content="Diventa un guidatore sicuro con istruttori certificati. Corsi per tutte le categorie di patente.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DrivingSchool",
+    "name": "Autoscuola Martorano",
+    "url": "https://www.autoscuolamartorano.it",
+    "telephone": "+39 123456789",
+    "description": "Autoscuola Martorano offre corsi per patente AM, A1, A2, A, B, C, D e CQC con istruttori certificati e alta percentuale di promossi.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "PZ",
+      "addressCountry": "IT"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Corsi di guida",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente AM"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente A1"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente A2"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente A"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente B"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente C"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Patente D"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "CQC"}}
+      ]
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #003a8c;
+      --primary-mid: #0052c2;
+      --primary-light: #1a6bff;
+      --accent: #ff6200;
+      --accent-warm: #ff8a00;
+      --dark: #090e1a;
+      --text: #1a2035;
+      --text-muted: #5a6480;
+      --surface: #ffffff;
+      --surface-2: #f4f6fb;
+      --border: #e2e8f6;
+      --radius: 18px;
+      --shadow-sm: 0 2px 12px rgba(0, 58, 140, 0.07);
+      --shadow-md: 0 8px 32px rgba(0, 58, 140, 0.12);
+      --shadow-lg: 0 20px 60px rgba(0, 58, 140, 0.18);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--surface-2);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(0, 74, 173, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.35s ease;
+    }
+
+    header.shrink .navbar { padding: 0.45rem 24px; }
+    header.shrink .nav-left h2 { font-size: 17px; }
+
+    .navbar {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 24px;
+      color: white;
+      transition: all 0.35s ease;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .nav-left h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-left h2 span { color: var(--accent); }
+
+    #search-container { position: relative; width: 220px; }
+
+    #search-input {
+      width: 100%;
+      padding: 0.42rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: 0.25s;
+    }
+
+    #search-input::placeholder { color: rgba(255, 255, 255, 0.5); }
+    #search-input:focus {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    #search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 100%;
+      max-height: 260px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+      z-index: 2000;
+      list-style: none;
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: all 0.22s ease;
+    }
+
+    #search-results.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    #search-results li {
+      padding: 11px 14px;
+      cursor: pointer;
+      color: #111;
+      font-size: 0.88rem;
+      border-bottom: 1px solid #f0f0f0;
+      transition: 0.15s;
+    }
+
+    #search-results li:last-child { border-bottom: none; }
+    #search-results li:hover { background: #f0f5ff; color: var(--primary); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: 0.25s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 260px;
+        background: var(--primary);
+        flex-direction: column;
+        padding-top: 90px;
+        gap: 1.8rem;
+        align-items: center;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -8px 0 40px rgba(0, 0, 0, 0.3);
+      }
+      .nav-links.active { right: 0; }
+      .hamburger { display: flex; }
+      #search-container { width: 170px; }
+    }
+
+    @media (max-width: 480px) {
+      #search-container { width: 130px; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      background: linear-gradient(145deg, #001f5c 0%, #003494 45%, #0052c2 100%);
+      color: white;
+      text-align: center;
+      padding: 110px 24px 120px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 700px 400px at 20% 50%, rgba(255, 98, 0, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 500px 500px at 80% 20%, rgba(26, 107, 255, 0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 98, 0, 0.18);
+      color: #ffb380;
+      border: 1px solid rgba(255, 98, 0, 0.3);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      animation: fadeDown 0.6s 0.1s ease both;
+    }
+
+    .hero h1 em { font-style: normal; color: var(--accent); }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      animation: fadeDown 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.6s 0.25s ease both;
+      margin-bottom: 52px;
+    }
+
+    .btn-hero-primary {
+      padding: 13px 30px;
+      background: var(--accent);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(255, 98, 0, 0.4);
+      transition: 0.25s;
+    }
+
+    .btn-hero-primary:hover {
+      background: var(--accent-warm);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(255, 98, 0, 0.5);
+    }
+
+    .btn-hero-secondary {
+      padding: 13px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: 0.25s;
+    }
+
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.6s 0.35s ease both;
+    }
+
+    .hero-stat { text-align: center; }
+
+    .hero-stat strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .hero-stat span {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1240px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-block;
+      background: rgba(255, 98, 0, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(255, 98, 0, 0.2);
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.8px;
+      margin-bottom: 10px;
+    }
+
+    .section-title em { font-style: normal; color: var(--primary); }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── WHY CARDS ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .why-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 28px 28px 30px;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      animation: cardIn 0.5s ease both;
+    }
+
+    .why-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(0, 82, 194, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .why-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 14px rgba(0, 82, 194, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .why-highlight {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .why-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .why-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── PATENTI GRID ── */
+    .patenti-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    /* Category headers */
+    .patenti-category-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 32px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+      grid-column: 1 / -1;
+    }
+
+    .patente-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 24px 22px;
+      transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: cardIn 0.5s ease both;
+    }
+
+    .patente-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(0, 82, 194, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .patente-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 3px 10px rgba(0, 82, 194, 0.25);
+    }
+
+    .patente-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .patente-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+
+    .patente-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary-light);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: 0.2s;
+    }
+
+    .patente-link:hover { color: var(--accent); }
+
+    /* ── SECTION BG ALT ── */
+    .section-alt { background: white; }
+
+    .section-dark {
+      background: linear-gradient(145deg, #001f5c 0%, #003494 60%, #0052c2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+
+    .section-dark .section-inner { position: relative; z-index: 1; }
+
+    .section-dark .section-label {
+      background: rgba(255, 98, 0, 0.18);
+      color: #ffb380;
+      border-color: rgba(255, 98, 0, 0.3);
+    }
+
+    .section-dark .section-title { color: white; }
+    .section-dark .section-title em { color: var(--accent); }
+    .section-dark .section-sub { color: rgba(255, 255, 255, 0.65); }
+
+    /* ── FORM ── */
+    .form-wrap {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-md);
+      padding: 36px 40px;
+      max-width: 580px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+
+    .form-field label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: 0.22s;
+      resize: vertical;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--primary-light);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(26, 107, 255, 0.08);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(255, 98, 0, 0.3);
+      transition: 0.25s;
+      margin-top: 6px;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-warm);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255, 98, 0, 0.4);
+    }
+
+    #form-message { margin-top: 14px; font-size: 0.88rem; }
+
+    /* ── TESTO SEO ── */
+    .seo-block { max-width: 760px; }
+
+    .seo-block p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .seo-block p:last-child { margin-bottom: 0; }
+
+    /* ── CTA FINALE ── */
+    .cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-cta-primary {
+      padding: 14px 34px;
+      background: var(--accent);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(255, 98, 0, 0.4);
+      transition: 0.25s;
+    }
+
+    .btn-cta-primary:hover {
+      background: var(--accent-warm);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(255, 98, 0, 0.5);
+    }
+
+    .btn-cta-secondary {
+      padding: 14px 34px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: 0.25s;
+    }
+
+    .btn-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255, 255, 255, 0.55);
+      padding: 40px 20px 28px;
+      font-size: 0.875rem;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      display: block;
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      /* Filtro per adattare il logo allo sfondo scuro */
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      transition: opacity 0.25s;
+    }
+
+    .footer-logo:hover { opacity: 0.85; }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .footer-copyright { text-align: center; }
+    .footer-copyright span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .why-card:nth-child(1) { animation-delay: 0.04s; }
+    .why-card:nth-child(2) { animation-delay: 0.10s; }
+    .why-card:nth-child(3) { animation-delay: 0.16s; }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-wrap { padding: 24px 20px; }
+      .hero { padding: 80px 20px 90px; }
+      .footer-logo { height: 52px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="navbar">
+      <div class="nav-left">
+        <h2>Autoscuola <span>Martorano</span></h2>
+        <div id="search-container">
+          <input type="text" id="search-input" placeholder="Cerca patenti o pagine…" aria-label="Cerca patenti o pagine">
+          <ul id="search-results" role="listbox"></ul>
+        </div>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('corsi') }}">Corsi</a></li>
+          <li><a href="{{ url_for('CQC') }}">CQC</a></li>
+          <li><a href="{{ url_for('chi_siamo') }}">Chi siamo</a></li>
+          <li><a href="{{ url_for('patenti') }}">Patenti</a></li>
+          <li><a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a></li>
+          <li><a href="{{ url_for('blog') }}">Blog</a></li>
+          <li><a href="{{ url_for('contatti') }}">Contatti</a></li>
+          <li><a href="{{ url_for('servizisupatente') }}">Servizi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Scuola Guida</div>
+      <h1>Diventa un guidatore <em>sicuro</em>.</h1>
+      <p>Istruttori certificati, auto moderne e un metodo che funziona. Patenti AM, A, B, C, D e CQC.</p>
+      <div class="hero-actions">
+        <a href="{{ url_for('contatti') }}" class="btn-hero-primary">Prenota la prima lezione</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>15+</strong><span>categorie</span></div>
+        <div class="hero-stat"><strong>Rate</strong><span>disponibili</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PERCHÉ SCEGLIERCI ── -->
+  <section class="section section-alt">
+    <div class="section-inner">
+      <div class="section-label">I nostri punti di forza</div>
+      <h2 class="section-title">Perché sceglierci</h2>
+      <p class="section-sub">Un team di professionisti al tuo fianco, dalla prima lezione fino all'esame.</p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">👨‍🏫</div>
+          <h3>Istruttori certificati</h3>
+          <p>Professionisti qualificati con esperienza pluriennale e un approccio paziente e motivante.</p>
+        </div>
+        <a href="{{ url_for('macchine') }}" class="why-card">
+          <div class="why-icon">🚘</div>
+          <h3>Auto moderne</h3>
+          <p>Veicoli sicuri, aggiornati e sempre controllati per garantire massima affidabilità a ogni lezione.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LE NOSTRE PATENTI ── -->
+  <section class="section" id="patenti">
+    <div class="section-inner">
+      <div class="section-label">Categorie disponibili</div>
+      <h2 class="section-title">Le nostre <em>patenti</em></h2>
+      <p class="section-sub">Dalla patente AM per ciclomotori fino alla D per autobus: copriamo tutte le categorie previste dal Codice della Strada.</p>
+
+      <div class="patenti-grid">
+
+        <!-- ── MOTO E CICLOMOTORI ── -->
+        <div class="patenti-category-title">🛵 Moto e Ciclomotori</div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🛵</div>
+          <h3>Patente AM</h3>
+          <p>Ciclomotori fino a 50cc e quadricicli leggeri. Dai 14 anni. La patente per iniziare a guidare.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🏍️</div>
+          <h3>Patente A1</h3>
+          <p>Moto leggere fino a 125cc e 11 kW. Dai 16 anni. Primo passo nel mondo delle due ruote.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🏍️</div>
+          <h3>Patente A2</h3>
+          <p>Moto di potenza limitata fino a 35 kW. Dai 18 anni. Per i motociclisti in crescita.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🏍️</div>
+          <h3>Patente A</h3>
+          <p>Tutte le moto senza limiti di cilindrata. Dai 24 anni (o 21 con accesso progressivo da A2).</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <!-- ── AUTO ── -->
+        <div class="patenti-category-title">🚗 Auto</div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚗</div>
+          <h3>Patente B</h3>
+          <p>Autovetture fino a 3.500 kg. La patente più richiesta: obbligatoria per guidare l'auto. Dai 18 anni.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚙</div>
+          <h3>Patente B1</h3>
+          <p>Quadricicli pesanti (minicar). Dai 16 anni.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚗</div>
+          <h3>Patente B96</h3>
+          <p>Auto con rimorchi fino a 4.250 kg complessivi. Estensione della patente B.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚗</div>
+          <h3>Patente BE</h3>
+          <p>Auto con rimorchi oltre 750 kg. Per carichi più impegnativi.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚕</div>
+          <h3>Patente KB</h3>
+          <p>Abilitazione per taxi e NCC. Trasporto persone professionale.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <!-- ── MEZZI PESANTI ── -->
+        <div class="patenti-category-title">🚛 Mezzi Pesanti</div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚛</div>
+          <h3>Patente C1</h3>
+          <p>Veicoli tra 3.500 e 7.500 kg. Dai 18 anni.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚛</div>
+          <h3>Patente C1E</h3>
+          <p>Veicoli C1 con rimorchio. Maggiore capacità di carico.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚛</div>
+          <h3>Patente C</h3>
+          <p>Camion oltre 3.500 kg. Trasporto merci professionale.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚛</div>
+          <h3>Patente CE</h3>
+          <p>Camion con rimorchi pesanti. Trasporto merci professionale completo.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <!-- ── TRASPORTO PERSONE ── -->
+        <div class="patenti-category-title">🚌 Trasporto Persone</div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚌</div>
+          <h3>Patente D1</h3>
+          <p>Minibus fino a 16 passeggeri. Dai 21 anni.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚌</div>
+          <h3>Patente D1E</h3>
+          <p>Minibus con rimorchio. Trasporto persone esteso.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚌</div>
+          <h3>Patente D</h3>
+          <p>Autobus. Massima abilitazione per il trasporto di persone. Dai 24 anni.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+        <div class="patente-card">
+          <div class="patente-icon">🚌</div>
+          <h3>Patente DE</h3>
+          <p>Autobus con rimorchio. Massima capacità di trasporto persone.</p>
+          <a href="{{ url_for('patenti') }}" class="patente-link">Scopri di più →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRENOTA ── -->
+  <section class="section section-alt" id="prenota">
+    <div class="section-inner">
+      <div class="section-label">Contattaci</div>
+      <h2 class="section-title">Parla con <em>NOI</em></h2>
+      <p class="section-sub">Compila il modulo e ti ricontattiamo entro poche ore.</p>
+
+      <div class="form-wrap">
+        <form id="prenota-form" action="contatti.php" method="POST" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" placeholder="Mario Rossi" required autocomplete="name">
+            </div>
+            <div class="form-field">
+              <label for="telefono">Telefono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="+39 333 000 0000" required autocomplete="tel">
+            </div>
+            <div class="form-field full">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="mario@email.it" required autocomplete="email">
+            </div>
+            <div class="form-field full">
+              <label for="patente">Patente di interesse</label>
+              <select id="patente" name="patente">
+                <option value="Patente AM">Patente AM – Ciclomotori</option>
+                <option value="Patente A1">Patente A1 – Moto 125cc</option>
+                <option value="Patente A2">Patente A2 – Moto limitata</option>
+                <option value="Patente A">Patente A – Moto senza limiti</option>
+                <option value="Patente B">Patente B – Auto</option>
+                <option value="Patente B96">Patente B96</option>
+                <option value="Patente BE">Patente BE</option>
+                <option value="Patente C">Patente C – Camion</option>
+                <option value="Patente D">Patente D – Autobus</option>
+                <option value="CQC">CQC</option>
+                <option value="Altro">Altro</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="messaggio">Messaggio</label>
+              <textarea id="messaggio" name="messaggio" rows="4" placeholder="Scrivi qui la tua richiesta…" required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">Prenota ora</button>
+          <div id="form-message" role="alert"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEO TEXT ── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-label">Chi siamo</div>
+      <h2 class="section-title">Corsi patente e <em>servizi</em> disponibili</h2>
+      <div class="seo-block">
+        <p>L'Autoscuola Martorano è il punto di riferimento per chi vuole conseguire la patente di guida con serenità e professionalità. Offriamo corsi completi per tutte le categorie: patente AM per ciclomotori e quadricicli leggeri, patente A1, A2 e A per motocicli, patente B per autovetture, e le categorie professionali C e D per mezzi pesanti e autobus.</p>
+        <p>Proponiamo anche la <strong>CQC (Carta di Qualificazione del Conducente)</strong> per il trasporto professionale di merci e persone, oltre a servizi come rinnovo patente, duplicato, revisione e pratiche amministrative.</p>
+        <p>Grazie a un metodo didattico efficace e istruttori certificati, accompagniamo ogni studente fino al superamento dell'esame teorico e pratico, con una delle più alte percentuali di promossi della zona.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINALE ── -->
+  <section class="section section-dark">
+    <div class="section-inner">
+      <div class="section-label">Inizia ora</div>
+      <h2 class="section-title">Pronto a prendere la <em>patente</em>?</h2>
+      <p class="section-sub">Iscriviti oggi e approfitta delle nostre offerte esclusive. Il primo passo verso la tua libertà inizia qui.</p>
+      <div class="cta-buttons">
+        <a href="#prenota" class="btn-cta-primary">Iscriviti ora</a>
+        <a href="tel:+391234567890" class="btn-cta-secondary">📞 Chiamaci</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+
+    <div class="footer-inner">
+      <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+        <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano" class="footer-logo">
+      </a>
+      <div class="footer-links">
+        <a href="{{ url_for('corsi') }}">Corsi</a>
+        <a href="{{ url_for('CQC') }}">CQC</a>
+        <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+        <a href="{{ url_for('patenti') }}">Patenti</a>
+        <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+        <a href="{{ url_for('blog') }}">Blog</a>
+        <a href="{{ url_for('contatti') }}">Contatti</a>
+        <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+    </div>
+  </footer>
+  <script>
+    // HAMBURGER
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("nav-links");
+    hamburger.addEventListener("click", e => { e.stopPropagation(); navLinks.classList.toggle("active"); });
+    document.addEventListener("click", e => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) navLinks.classList.remove("active");
+    });
+
+    // SEARCH
+    const searchInput = document.getElementById("search-input");
+    const searchResults = document.getElementById("search-results");
+
+    const pages = [
+      { title: "Patente AM", url: "{{ url_for('patenti') }}", keywords: ["ciclomotori", "50cc", "motorino", "patente am"] },
+      { title: "Patente A1", url: "{{ url_for('patenti') }}", keywords: ["moto 125", "a1", "motociclo leggero"] },
+      { title: "Patente A2", url: "{{ url_for('patenti') }}", keywords: ["moto media", "a2", "limitata"] },
+      { title: "Patente A", url: "{{ url_for('patenti') }}", keywords: ["moto", "a senza limiti", "patente moto"] },
+      { title: "Patente B", url: "{{ url_for('patenti') }}", keywords: ["auto", "macchina", "patente b"] },
+      { title: "Patente B1", url: "{{ url_for('patenti') }}", keywords: ["quadricicli", "b1", "minicar", "microcar"] },
+      { title: "Patente BE", url: "{{ url_for('patenti') }}", keywords: ["rimorchio", "auto con rimorchio", "be"] },
+      { title: "Patente B96", url: "{{ url_for('patenti') }}", keywords: ["rimorchio pesante", "estensione b", "b96"] },
+      { title: "Patente KB", url: "{{ url_for('patenti') }}", keywords: ["taxi", "ncc", "trasporto persone", "kb"] },
+      { title: "Patente C", url: "{{ url_for('patenti') }}", keywords: ["camion", "mezzi pesanti", "trasporto merci"] },
+      { title: "Patente C1", url: "{{ url_for('patenti') }}", keywords: ["camion leggeri", "c1", "trasporto merci medio"] },
+      { title: "Patente D", url: "{{ url_for('patenti') }}", keywords: ["autobus", "trasporto persone", "pullman"] },
+      { title: "Patente D1", url: "{{ url_for('patenti') }}", keywords: ["minibus", "d1", "trasporto persone limitato"] },
+      { title: "Corsi CQC", url: "{{ url_for('CQC') }}", keywords: ["cqc merci", "cqc persone", "carta qualificazione conducente"] },
+      { title: "Corsi ADR", url: "{{ url_for('corsi') }}", keywords: ["adr", "merci pericolose", "trasporto adr"] },
+      { title: "Recupero punti", url: "{{ url_for('corsi') }}", keywords: ["punti patente", "corso recupero punti"] },
+      { title: "Rinnovo patente", url: "{{ url_for('corsi') }}", keywords: ["scadenza patente", "rinnovo patente"] },
+      { title: "Conversione patente estera", url: "{{ url_for('corsi') }}", keywords: ["patente straniera", "conversione patente"] },
+      { title: "Contatti", url: "{{ url_for('contatti') }}", keywords: ["telefono", "email", "whatsapp", "indirizzo"] },
+      { title: "Chi siamo", url: "{{ url_for('chi_siamo') }}", keywords: ["scuola guida", "staff", "informazioni"] },
+      { title: "Servizi patente", url: "{{ url_for('servizisupatente') }}", keywords: ["servizi", "pratiche patente"] },
+      { title: "Duplicato patente", url: "{{ url_for('servizisupatente') }}", keywords: ["smarrimento patente", "furto patente"] },
+      { title: "Parlano di noi", url: "{{ url_for('parlanodinoi') }}", keywords: ["recensioni", "opinioni", "clienti"] },
+      { title: "Parco macchine", url: "{{ url_for('macchine') }}", keywords: ["mezzi", "macchine", "moto"] },
+    ];
+
+    searchInput.addEventListener("input", () => {
+      const q = searchInput.value.toLowerCase().trim();
+      searchResults.innerHTML = "";
+      if (!q) { searchResults.classList.remove("active"); return; }
+      const filtered = pages.filter(p => p.title.toLowerCase().includes(q) || p.keywords.some(k => k.includes(q)));
+      filtered.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p.title;
+        li.onclick = () => window.location.href = p.url;
+        searchResults.appendChild(li);
+      });
+      searchResults.classList.toggle("active", filtered.length > 0);
+    });
+
+    document.addEventListener("click", e => {
+      if (!document.getElementById("search-container").contains(e.target)) searchResults.classList.remove("active");
+    });
+
+    // SHRINK
+    window.addEventListener("scroll", () => {
+      document.querySelector("header").classList.toggle("shrink", window.scrollY > 50);
+    });
+
+    // FORM
+    const form = document.getElementById("prenota-form");
+    const messageBox = document.getElementById("form-message");
+
+    if (form) {
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        try {
+          const response = await fetch("/send", { method: "POST", body: formData });
+          const text = await response.text();
+          messageBox.innerHTML = `<div style="background:#d4edda;padding:10px 14px;border-radius:8px;font-size:0.88rem;">${text}</div>`;
+          form.reset();
+        } catch {
+          messageBox.innerHTML = `<div style="background:#f8d7da;padding:10px 14px;border-radius:8px;font-size:0.88rem;">Errore di connessione. Riprova più tardi.</div>`;
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

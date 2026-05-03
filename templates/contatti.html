@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="it" itemscope itemtype="https://schema.org/DrivingSchool">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatti | Autoscuola Martorano</title>
+    <meta name="description"
+        content="Contatta Autoscuola Martorano. Telefono, WhatsApp, email, orari e posizione. Prenota oggi la tua patente AM o B.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "DrivingSchool",
+        "name": "Autoscuola Martorano",
+        "address": {
+            "addressRegion": "PZ",
+            "addressCountry": "IT"
+        }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #003a8c;
+            --primary-mid: #0052c2;
+            --primary-light: #1a6bff;
+            --accent: #ff6200;
+            --accent-warm: #ff8a00;
+            --dark: #090e1a;
+            --text: #1a2035;
+            --text-muted: #5a6480;
+            --surface: #ffffff;
+            --surface-2: #f4f6fb;
+            --border: #e2e8f6;
+            --radius: 18px;
+            --shadow-sm: 0 2px 12px rgba(0, 58, 140, 0.07);
+            --shadow-md: 0 8px 32px rgba(0, 58, 140, 0.12);
+            --shadow-lg: 0 20px 60px rgba(0, 58, 140, 0.18);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface-2);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 74, 173, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s ease;
+        }
+
+        header.shrink .navbar {
+            padding: 0.45rem 24px;
+        }
+
+        header.shrink .nav-left h2 {
+            font-size: 17px;
+        }
+
+        .navbar {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 24px;
+            color: white;
+            transition: all 0.35s ease;
+            gap: 16px;
+        }
+
+        .nav-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .nav-left h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-left h2 span {
+            color: var(--accent);
+        }
+
+        #search-container {
+            position: relative;
+            width: 220px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.42rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        #search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        #search-input:focus {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        #search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            max-height: 260px;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+            z-index: 2000;
+            list-style: none;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: all 0.22s ease;
+        }
+
+        #search-results.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        #search-results li {
+            padding: 11px 14px;
+            cursor: pointer;
+            color: #111;
+            font-size: 0.88rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: 0.15s;
+        }
+
+        #search-results li:last-child {
+            border-bottom: none;
+        }
+
+        #search-results li:hover {
+            background: #f0f5ff;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: 0.25s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 260px;
+                background: var(--primary);
+                flex-direction: column;
+                padding-top: 90px;
+                gap: 1.8rem;
+                align-items: center;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -8px 0 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            #search-container {
+                width: 170px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #search-container {
+                width: 130px;
+            }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(145deg, #001f5c 0%, #003494 45%, #0052c2 100%);
+            color: white;
+            text-align: center;
+            padding: 90px 24px 100px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 700px 400px at 20% 50%, rgba(255, 98, 0, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 20%, rgba(26, 107, 255, 0.15) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 98, 0, 0.18);
+            color: #ffb380;
+            border: 1px solid rgba(255, 98, 0, 0.3);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            animation: fadeDown 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+            animation: fadeDown 0.6s 0.1s ease both;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 480px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeDown 0.6s 0.2s ease both;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeDown 0.6s 0.3s ease both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .hero-stat span {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* ── MAIN CONTAINER ── */
+        .page-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 52px 24px 80px;
+        }
+
+        /* ── SECTION LABEL ── */
+        .section-label {
+            display: inline-block;
+            background: rgba(255, 98, 0, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(255, 98, 0, 0.2);
+            border-radius: 50px;
+            padding: 5px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .section-title em {
+            font-style: normal;
+            color: var(--primary);
+        }
+
+        .section-sub {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        /* ── TOP GRID: info + form ── */
+        .contact-top {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 24px;
+            margin-bottom: 52px;
+        }
+
+        /* ── INFO CARD ── */
+        .info-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 28px 28px 32px;
+            animation: cardIn 0.5s 0.04s ease both;
+        }
+
+        .info-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 82, 194, 0.25);
+        }
+
+        .info-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .info-value {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .info-value a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .info-value a:hover {
+            color: var(--accent);
+        }
+
+        /* ── FORM CARD ── */
+        .form-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 28px 32px 32px;
+            animation: cardIn 0.5s 0.10s ease both;
+        }
+
+        .form-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .form-grid .full {
+            grid-column: 1 / -1;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-field label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--surface-2);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            transition: 0.22s;
+            resize: vertical;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            border-color: var(--primary-light);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 107, 255, 0.08);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 12px;
+            background: var(--accent);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 98, 0, 0.3);
+            transition: 0.25s;
+            margin-top: 6px;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-warm);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(255, 98, 0, 0.4);
+        }
+
+        #feedback {
+            margin-top: 14px;
+            font-size: 0.88rem;
+            border-radius: 8px;
+        }
+
+        /* ── SEDI ── */
+        .sedi-section {
+            margin-bottom: 52px;
+        }
+
+        .sedi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .sede-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+            animation: cardIn 0.5s ease both;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .sede-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 82, 194, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .sede-map-thumb {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #dde6ff 0%, #c8d8ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sede-map-thumb::after {
+            content: 'Apri su Maps →';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 58, 140, 0.75);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-align: center;
+            padding: 7px;
+            transform: translateY(100%);
+            transition: transform 0.25s ease;
+        }
+
+        .sede-card:hover .sede-map-thumb::after {
+            transform: translateY(0);
+        }
+
+        .sede-body {
+            padding: 18px 20px 20px;
+        }
+
+        .sede-tag {
+            display: inline-block;
+            background: #eef3ff;
+            color: var(--primary);
+            border: 1px solid #d0dcff;
+            border-radius: 6px;
+            padding: 2px 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .sede-body h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            transition: 0.2s;
+        }
+
+        .sede-card:hover .sede-body h3 {
+            color: var(--primary);
+        }
+
+        .sede-body p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .sede-body .sede-orari {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sede-body .sede-orari span {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        /* animation delays for sede cards */
+        .sede-card:nth-child(1) {
+            animation-delay: 0.04s;
+        }
+
+        .sede-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .sede-card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        .sede-card:nth-child(4) {
+            animation-delay: 0.22s;
+        }
+
+        /* ── MAP ── */
+        .map-section {
+            margin-bottom: 0;
+        }
+
+        .map-wrap {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-md);
+            animation: cardIn 0.5s 0.2s ease both;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.55);
+            padding: 40px 20px 28px;
+            font-size: 0.875rem;
+        }
+
+        .footer-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: block;
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            /* Filtro per adattare il logo allo sfondo scuro */
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+            transition: opacity 0.25s;
+        }
+
+        .footer-logo:hover {
+            opacity: 0.85;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-copyright {
+            text-align: center;
+        }
+
+        .footer-copyright span {
+            color: var(--accent);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .why-card:nth-child(1) {
+            animation-delay: 0.04s;
+        }
+
+        .why-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .why-card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-wrap {
+                padding: 24px 20px;
+            }
+
+            .hero {
+                padding: 80px 20px 90px;
+            }
+
+            .footer-logo {
+                height: 52px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="nav-left">
+                <h2>Autoscuola <span>Martorano</span></h2>
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Cerca patenti o pagine…">
+                    <ul id="search-results"></ul>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('corsi') }}">Corsi</a></li>
+                <li><a href="{{ url_for('CQC') }}">CQC</a></li>
+                <li><a href="{{ url_for('chi_siamo') }}">Chi siamo</a></li>
+                <li><a href="{{ url_for('patenti') }}">Patenti</a></li>
+                <li><a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contatti') }}">Contatti</a></li>
+                <li><a href="{{ url_for('servizisupatente') }}">Servizi</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Autoscuola</div>
+            <h1><em>Contattaci</em>,<br>siamo qui per te.</h1>
+            <p>Scrivici, chiamaci o vieni a trovarci. Ti risponderemo nel minor tempo possibile.</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>4</strong><span>sedi</span></div>
+                <div class="hero-stat"><strong>📞</strong><span>Chiamaci</span></div>
+                <div class="hero-stat"><strong>💬</strong><span>WhatsApp</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-container">
+
+        <!-- ── CONTATTI PRINCIPALI ── -->
+        <div class="contact-top">
+
+            <!-- INFO -->
+            <div class="info-card" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                <h3>Informazioni di contatto</h3>
+
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text">
+                        <span class="info-label">Sede principale</span>
+                        <span class="info-value">
+                            <span itemprop="streetAddress">Via Aldo moro 26</span>,
+                            <span itemprop="addressLocality">Sanbrancato di Sant'Arcangelo</span>
+                            <span itemprop="addressRegion">PZ</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text">
+                        <span class="info-label">Telefono</span>
+                        <span class="info-value">
+                            <a href="tel:+393XXXXXXXXX" itemprop="telephone">+39 3XX XXX XXXX</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-icon">✉️</div>
+                    <div class="info-text">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">
+                            <a href="mailto:nicola.martorano@tiscali.it"
+                                itemprop="email">nicola.martorano@tiscali.it</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-icon">💬</div>
+                    <div class="info-text">
+                        <span class="info-label">WhatsApp</span>
+                        <span class="info-value">
+                            <a href="https://wa.me/393XXXXXXXXX" target="_blank">Scrivici su WhatsApp</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-text">
+                        <span class="info-label">Orari</span>
+                        <span class="info-value">
+                            Lun – Ven: 09:00 – 19:00<br>
+                            Sabato: 09:00 – 13:00
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORM -->
+            <div class="form-card">
+                <h3>Invia un messaggio</h3>
+                <form id="contactForm">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" placeholder="Mario Rossi" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" id="telefono" name="telefono" placeholder="+39 333 000 0000" required>
+                        </div>
+                        <div class="form-field full">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="mario@email.it" required>
+                        </div>
+                        <div class="form-field full">
+                            <label for="patente">Tipo di patente</label>
+                            <select id="patente" name="patente">
+                                <option value="">Seleziona una patente…</option>
+                                <option value="Patente AM">Patente AM</option>
+                                <option value="Patente A1">Patente A1</option>
+                                <option value="Patente A2">Patente A2</option>
+                                <option value="Patente A">Patente A</option>
+                                <option value="Patente B">Patente B</option>
+                                <option value="Patente C">Patente C</option>
+                                <option value="Patente D">Patente D</option>
+                                <option value="CQC">CQC</option>
+                                <option value="ADR">ADR</option>
+                                <option value="Altro">Altro</option>
+                            </select>
+                        </div>
+                        <div class="form-field full">
+                            <label for="messaggio">Messaggio</label>
+                            <textarea id="messaggio" name="messaggio" rows="4"
+                                placeholder="Scrivi qui la tua richiesta…" required></textarea>
+                        </div>
+                    </div>
+                    <!-- HONEYPOT -->
+                    <input type="text" name="website" style="display:none">
+                    <button type="submit" class="btn-submit">Invia messaggio</button>
+                </form>
+                <div id="feedback"></div>
+            </div>
+
+        </div>
+
+        <!-- ── LE NOSTRE SEDI ── -->
+        <div class="sedi-section">
+            <div class="section-label">Dove trovarci</div>
+            <h2 class="section-title">Le nostre <em>sedi</em></h2>
+            <p class="section-sub">Clicca su una sede per aprirla direttamente su Google Maps.</p>
+
+            <div class="sedi-grid">
+
+                <!-- SEDE 1 — sostituisci INDIRIZZO_1 con l'indirizzo reale -->
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Via+Aldo+Moro+26,+Sant'Arcangelo,+PZ"
+                    target="_blank" rel="noopener" class="sede-card">
+                    <div class="sede-map-thumb">📍</div>
+                    <div class="sede-body">
+                        <span class="sede-tag">Sede principale</span>
+                        <h3>Sede Sant'arcangelo</h3>
+                        <p>Via Aldo moro 26, San Brancato di Sant'Arcangelo PZ</p>
+                        <div class="sede-orari">🕐 <span>Aperta</span> · Lun–Ven 8.30/13.00 - 16.30/20.30</div>
+                    </div>
+                </a>
+
+                <!-- SEDE 2 -->
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Viale+Vittorio+Emanuele+III+61,+85059+Viggiano+PZ,+Italy"
+                    target="_blank" rel="noopener" class="sede-card">
+                    <div class="sede-map-thumb">📍</div>
+                    <div class="sede-body">
+                        <span class="sede-tag">seconda sede</span>
+                        <h3>Sede di Viggiano</h3>
+                        <p>Via Vittorio Emanuele 61, Viggiano PZ</p>
+                        <div class="sede-orari">🕐 <span>Aperta</span> · Lun–Ven dalle 16.00 in poi</div>
+                    </div>
+                </a>
+
+                <!-- SEDE 3 -->
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Via+Aldo+Moro+35,+Marsico+Vetere,+PZ"
+                    target="_blank" rel="noopener" class="sede-card">
+                    <div class="sede-map-thumb">📍</div>
+                    <div class="sede-body">
+                        <span class="sede-tag">terza sede</span>
+                        <h3>Sede di Marsico Vetere</h3>
+                        <p>Via Aldo Moro 35, Villa d'agri di Marsico Vetere PZ</p>
+                        <div class="sede-orari">🕐 <span>Aperta</span> · Lun–Ven dalle 16.00 in poi</div>
+                    </div>
+                </a>
+
+                <!-- SEDE 4 -->
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Via+Ariosto+8,+Corleto+Perticara,+PZ"
+                    target="_blank" rel="noopener" class="sede-card">
+                    <div class="sede-map-thumb">📍</div>
+                    <div class="sede-body">
+                        <span class="sede-tag">quarta sede</span>
+                        <h3>Sede di Corleto</h3>
+                        <p>Via Ariosto 8, Corleto PZ</p>
+                        <div class="sede-orari">🕐 <span>Aperta</span> · Lun–Ven dalle 16.00 in poi</div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- ── FOOTER ── -->
+    <footer>
+
+        <div class="footer-inner">
+            <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+                <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano"
+                    class="footer-logo">
+            </a>
+            <div class="footer-links">
+                <a href="{{ url_for('corsi') }}">Corsi</a>
+                <a href="{{ url_for('CQC') }}">CQC</a>
+                <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+                <a href="{{ url_for('patenti') }}">Patenti</a>
+                <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+                <a href="{{ url_for('blog') }}">Blog</a>
+                <a href="{{ url_for('contatti') }}">Contatti</a>
+                <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+        </div>
+    </footer>
+
+    <script>
+        // HAMBURGER
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("nav-links");
+        hamburger.addEventListener("click", e => { e.stopPropagation(); navLinks.classList.toggle("active"); });
+        document.addEventListener("click", e => {
+            if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) navLinks.classList.remove("active");
+        });
+
+        // SEARCH
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        const pages = [
+            { title: "Patente AM", url: "{{ url_for('patenti') }}", keywords: ["ciclomotori", "50cc", "motorino"] },
+            { title: "Patente A1", url: "{{ url_for('patenti') }}", keywords: ["moto 125", "a1", "motociclo leggero"] },
+            { title: "Patente A2", url: "{{ url_for('patenti') }}", keywords: ["moto media", "a2", "limitata"] },
+            { title: "Patente A", url: "{{ url_for('patenti') }}", keywords: ["moto", "illimitata", "patente moto"] },
+            { title: "Patente B1", url: "{{ url_for('patenti') }}", keywords: ["quadriciclo", "b1", "microcar"] },
+            { title: "Patente B", url: "{{ url_for('patenti') }}", keywords: ["auto", "macchina", "patente b"] },
+            { title: "Patente B96", url: "{{ url_for('patenti') }}", keywords: ["b96", "rimorchio", "caravan b"] },
+            { title: "Patente BE", url: "{{ url_for('patenti') }}", keywords: ["be", "rimorchio pesante", "caravan grande"] },
+            { title: "Patente KB", url: "{{ url_for('patenti') }}", keywords: ["kb", "conversione patente", "patente estera"] },
+            { title: "Patente C1", url: "{{ url_for('patenti') }}", keywords: ["furgone grande", "c1", "7500 kg"] },
+            { title: "Patente C1E", url: "{{ url_for('patenti') }}", keywords: ["c1e", "furgone rimorchio"] },
+            { title: "Patente C", url: "{{ url_for('patenti') }}", keywords: ["camion", "mezzi pesanti", "trasporto merci"] },
+            { title: "Patente D1", url: "{{ url_for('patenti') }}", keywords: ["minibus", "d1", "pulmino"] },
+            { title: "Patente D1E", url: "{{ url_for('patenti') }}", keywords: ["d1e", "minibus rimorchio"] },
+            { title: "Patente D", url: "{{ url_for('patenti') }}", keywords: ["autobus", "trasporto persone", "pullman"] },
+
+            { title: "Corsi CQC", url: "{{ url_for('CQC') }}", keywords: ["cqc merci", "cqc persone", "carta qualificazione conducente"] },
+            { title: "Rinnovo patente CQC", url: "{{ url_for('CQC') }}", keywords: ["rinnovo cqc", "formazione periodica", "35 ore"] },
+            { title: "Conseguimento patente CQC", url: "{{ url_for('CQC') }}", keywords: ["corso cqc", "abilitazione professionale"] },
+
+            { title: "Contatti", url: "{{ url_for('contatti') }}", keywords: ["telefono", "email", "whatsapp", "indirizzo"] },
+            { title: "Chi siamo", url: "{{ url_for('chi_siamo') }}", keywords: ["scuola guida", "staff", "informazioni"] },
+
+            { title: "Servizi patente", url: "{{ url_for('servizisupatente') }}", keywords: ["servizi", "pratiche patente"] },
+            { title: "Patente internazionale", url: "{{ url_for('servizisupatente') }}", keywords: ["patente estero", "permesso internazionale"] },
+            { title: "Visita medica CML", url: "{{ url_for('servizisupatente') }}", keywords: ["commissione medica locale", "visita patente"] },
+            { title: "Revisione patente", url: "{{ url_for('servizisupatente') }}", keywords: ["esame revisione", "controllo patente"] },
+            { title: "Ripristino patente", url: "{{ url_for('servizisupatente') }}", keywords: ["recupero patente", "sospensione"] },
+            { title: "Duplicato patente", url: "{{ url_for('servizisupatente') }}", keywords: ["smarrimento patente", "furto patente"] },
+            { title: "Riclassificazione patente", url: "{{ url_for('servizisupatente') }}", keywords: ["conversione categoria", "upgrade patente"] },
+
+            { title: "Corsi Teoria", url: "{{ url_for('corsi') }}", keywords: ["lezioni teoria", "quiz patente", "esame teoria"] },
+            { title: "Corsi ADR", url: "{{ url_for('corsi') }}", keywords: ["adr", "merci pericolose", "trasporto adr", "patentino adr", "corso adr", "sicurezza trasporto"] },
+            { title: "Guide pratiche", url: "{{ url_for('corsi') }}", keywords: ["lezioni guida", "istruttore", "guida auto"] },
+            { title: "Recupero punti", url: "{{ url_for('corsi') }}", keywords: ["punti patente", "corso recupero punti"] },
+            { title: "Rinnovo patente", url: "{{ url_for('corsi') }}", keywords: ["scadenza patente", "rinnovo patente"] },
+            { title: "Conversione patente estera", url: "{{ url_for('corsi') }}", keywords: ["patente straniera", "conversione patente"] },
+
+            { title: "Parlano di noi", url: "{{ url_for('parlanodinoi') }}", keywords: ["recensioni", "opinioni", "clienti"] },
+
+            { title: "Parco macchine", url: "{{ url_for('macchine') }}", keywords: ["mezzi", "macchine", "moto"] }
+
+        ];
+
+        searchInput.addEventListener("input", () => {
+            const q = searchInput.value.toLowerCase().trim();
+            searchResults.innerHTML = "";
+            if (!q) { searchResults.classList.remove("active"); return; }
+            const filtered = pages.filter(p => p.title.toLowerCase().includes(q) || p.keywords.some(k => k.includes(q)));
+            filtered.forEach(p => {
+                const li = document.createElement("li");
+                li.textContent = p.title;
+                li.onclick = () => window.location.href = p.url;
+                searchResults.appendChild(li);
+            });
+            searchResults.classList.toggle("active", filtered.length > 0);
+        });
+
+        document.addEventListener("click", e => {
+            if (!document.getElementById("search-container").contains(e.target)) searchResults.classList.remove("active");
+        });
+
+        // SHRINK
+        window.addEventListener("scroll", () => {
+            document.querySelector("header").classList.toggle("shrink", window.scrollY > 50);
+        });
+
+        // FORM
+        const form = document.getElementById('contactForm');
+        const feedback = document.getElementById('feedback');
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            try {
+                const res = await fetch('/send', { method: 'POST', body: formData });
+                const text = await res.text();
+                feedback.innerHTML = res.ok
+                    ? `<div style="background:#d4edda;padding:10px 14px;border-radius:8px;color:#155724;">${text}</div>`
+                    : `<div style="background:#f8d7da;padding:10px 14px;border-radius:8px;color:#721c24;">${text}</div>`;
+                if (res.ok) form.reset();
+            } catch {
+                feedback.innerHTML = `<div style="background:#f8d7da;padding:10px 14px;border-radius:8px;color:#721c24;">Errore di connessione. Riprova più tardi.</div>`;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

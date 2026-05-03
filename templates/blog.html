@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Normativa Stradale | Autoscuola Martorano</title>
+    <meta name="description"
+        content="Rimani aggiornato su tutte le novità e modifiche delle norme del codice della strada.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #003a8c;
+            --primary-mid: #0052c2;
+            --primary-light: #1a6bff;
+            --accent: #ff6200;
+            --accent-warm: #ff8a00;
+            --dark: #090e1a;
+            --text: #1a2035;
+            --text-muted: #5a6480;
+            --surface: #ffffff;
+            --surface-2: #f4f6fb;
+            --border: #e2e8f6;
+            --radius: 18px;
+            --shadow-sm: 0 2px 12px rgba(0, 58, 140, 0.07);
+            --shadow-lg: 0 20px 60px rgba(0, 58, 140, 0.18);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface-2);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 74, 173, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s ease;
+        }
+
+        header.shrink .navbar {
+            padding: 0.45rem 24px;
+        }
+
+        header.shrink .nav-left h2 {
+            font-size: 17px;
+        }
+
+        .navbar {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 24px;
+            color: white;
+            transition: all 0.35s ease;
+            gap: 16px;
+        }
+
+        .nav-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .nav-left h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-left h2 span {
+            color: var(--accent);
+        }
+
+        #search-container {
+            position: relative;
+            width: 220px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.42rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        #search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        #search-input:focus {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        #search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            max-height: 260px;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+            z-index: 2000;
+            list-style: none;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: all 0.22s ease;
+        }
+
+        #search-results.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        #search-results li {
+            padding: 11px 14px;
+            cursor: pointer;
+            color: #111;
+            font-size: 0.88rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: 0.15s;
+        }
+
+        #search-results li:last-child {
+            border-bottom: none;
+        }
+
+        #search-results li:hover {
+            background: #f0f5ff;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: 0.25s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 260px;
+                background: var(--primary);
+                flex-direction: column;
+                padding-top: 90px;
+                gap: 1.8rem;
+                align-items: center;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -8px 0 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            #search-container {
+                width: 170px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #search-container {
+                width: 130px;
+            }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(145deg, #001f5c 0%, #003494 45%, #0052c2 100%);
+            color: white;
+            text-align: center;
+            padding: 90px 24px 100px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 700px 400px at 20% 50%, rgba(255, 98, 0, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 20%, rgba(26, 107, 255, 0.15) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 98, 0, 0.18);
+            color: #ffb380;
+            border: 1px solid rgba(255, 98, 0, 0.3);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            animation: fadeDown 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+            animation: fadeDown 0.6s 0.1s ease both;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeDown 0.6s 0.2s ease both;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeDown 0.6s 0.3s ease both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .hero-stat span {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* ── FILTER BAR ── */
+        .filter-bar {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 24px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.22s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* ── BLOG GRID ── */
+        .container {
+            max-width: 1240px;
+            margin: 36px auto 80px;
+            padding: 0 24px;
+        }
+
+        /* Featured post — full width */
+        .blog-featured {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 24px;
+            animation: cardIn 0.5s ease both;
+            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+        }
+
+        .blog-featured:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 82, 194, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .featured-visual {
+            background: linear-gradient(145deg, #001f5c, #0052c2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            padding: 50px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .featured-visual span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-body {
+            padding: 36px 36px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 98, 0, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(255, 98, 0, 0.2);
+            border-radius: 50px;
+            padding: 4px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            width: fit-content;
+        }
+
+        .featured-body h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 14px;
+            transition: 0.2s;
+        }
+
+        .blog-featured:hover .featured-body h2 {
+            color: var(--primary);
+        }
+
+        .featured-body p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .meta-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Normal grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        /* ── BLOG CARD ── */
+        .blog-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: cardIn 0.5s ease both;
+            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+        }
+
+        .blog-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 82, 194, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .card-visual {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-visual span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Category colour stripes */
+        .visual-velocita {
+            background: linear-gradient(135deg, #001f5c, #0052c2);
+        }
+
+        .visual-sicurezza {
+            background: linear-gradient(135deg, #064e3b, #059669);
+        }
+
+        .visual-sanzioni {
+            background: linear-gradient(135deg, #7c2d12, #ea580c);
+        }
+
+        .visual-tecnologia {
+            background: linear-gradient(135deg, #1e1b4b, #6d28d9);
+        }
+
+        .visual-ambiente {
+            background: linear-gradient(135deg, #14532d, #22c55e);
+        }
+
+        .visual-moto {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+        }
+
+        .visual-giovani {
+            background: linear-gradient(135deg, #4c1d95, #a855f7);
+        }
+
+        .card-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .card-content {
+            padding: 22px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .card-tag {
+            background: #eef3ff;
+            color: var(--primary);
+            border: 1px solid #d0dcff;
+            border-radius: 6px;
+            padding: 2px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .card-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .blog-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            line-height: 1.35;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+
+        .blog-card:hover h3 {
+            color: var(--primary);
+        }
+
+        .blog-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.22s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 14px rgba(255, 98, 0, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-warm);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 98, 0, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: #eef3ff;
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            background: linear-gradient(145deg, #001f5c 0%, #003494 60%, #0052c2 100%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 80px 24px;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1rem;
+            margin-bottom: 32px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(255, 98, 0, 0.4);
+            transition: 0.25s;
+        }
+
+        .btn-cta:hover {
+            background: var(--accent-warm);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(255, 98, 0, 0.5);
+        }
+
+/* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255, 255, 255, 0.55);
+      padding: 40px 20px 28px;
+      font-size: 0.875rem;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      display: block;
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      /* Filtro per adattare il logo allo sfondo scuro */
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      transition: opacity 0.25s;
+    }
+
+    .footer-logo:hover { opacity: 0.85; }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .footer-copyright { text-align: center; }
+    .footer-copyright span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .why-card:nth-child(1) { animation-delay: 0.04s; }
+    .why-card:nth-child(2) { animation-delay: 0.10s; }
+    .why-card:nth-child(3) { animation-delay: 0.16s; }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-wrap { padding: 24px 20px; }
+      .hero { padding: 80px 20px 90px; }
+      .footer-logo { height: 52px; }
+    }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="nav-left">
+                <h2>Autoscuola <span>Martorano</span></h2>
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Cerca patenti o pagine…">
+                    <ul id="search-results"></ul>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('corsi') }}">Corsi</a></li>
+                <li><a href="{{ url_for('CQC') }}">CQC</a></li>
+                <li><a href="{{ url_for('chi_siamo') }}">Chi siamo</a></li>
+                <li><a href="{{ url_for('patenti') }}">Patenti</a></li>
+                <li><a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contatti') }}">Contatti</a></li>
+                <li><a href="{{ url_for('servizisupatente') }}">Servizi</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Normativa · Codice della Strada</div>
+            <h1>Blog <em>stradale</em>,<br>sempre aggiornato.</h1>
+            <p>Rimani informato su novità normative, modifiche al codice della strada e consigli per guidare in
+                sicurezza.</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>8+</strong><span>articoli</span></div>
+                <div class="hero-stat"><strong>2026</strong><span>aggiornato</span></div>
+                <div class="hero-stat"><strong>100%</strong><span>gratuito</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FILTER BAR ── -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">Tutti</button>
+        <button class="filter-btn" data-filter="velocita">Velocità</button>
+        <button class="filter-btn" data-filter="sicurezza">Sicurezza</button>
+        <button class="filter-btn" data-filter="sanzioni">Sanzioni</button>
+        <button class="filter-btn" data-filter="tecnologia">Tecnologia</button>
+        <button class="filter-btn" data-filter="ambiente">Ambiente</button>
+    </div>
+
+    <section class="container">
+
+        <!-- ── FEATURED POST ── -->
+        <div class="blog-featured" data-category="velocita">
+            <div class="featured-visual"><span>🚦</span></div>
+            <div class="featured-body">
+                <div class="featured-badge">⭐ In evidenza · Velocità</div>
+                <h2>Nuove regole sul limite di velocità in città</h2>
+                <div class="featured-meta">
+                    <span class="meta-date">📅 1 aprile 2026</span>
+                    <span class="meta-date">⏱️ 3 min di lettura</span>
+                </div>
+                <p>Dal 1° aprile 2026, il limite massimo di velocità nelle zone residenziali scende a 30 km/h, mentre le
+                    principali arterie urbane mantengono il limite a 50 km/h. L'obiettivo è ridurre gli incidenti e
+                    tutelare i pedoni, in linea con le direttive europee sulla mobilità sostenibile.</p>
+                <a href="{{ url_for('contatti') }}" class="btn btn-primary">Leggi l'articolo completo →</a>
+            </div>
+        </div>
+
+        <!-- ── BLOG GRID ── -->
+        <div class="blog-grid" id="blog-grid">
+
+            <!-- Cinture sicurezza -->
+            <div class="blog-card" data-category="sicurezza">
+                <div class="card-visual visual-sicurezza"><span>🪢</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Sicurezza</span>
+                        <span class="card-date">Marzo 2026</span>
+                    </div>
+                    <h3>Cinture di sicurezza: obbligo esteso ai sedili posteriori</h3>
+                    <p>Le nuove norme rafforzano l'obbligo di indossare le cinture anche nei sedili posteriori, con
+                        sanzioni più severe e controlli potenziati. Multa fino a €312 per i trasgressori.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- Cellulare alla guida -->
+            <div class="blog-card" data-category="sanzioni">
+                <div class="card-visual visual-sanzioni"><span>📵</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Sanzioni</span>
+                        <span class="card-date">Febbraio 2026</span>
+                    </div>
+                    <h3>Cellulare alla guida: sanzioni raddoppiate nel 2026</h3>
+                    <p>Il nuovo codice della strada inasprisce le pene per l'uso del telefono mentre si guida. Alla
+                        seconda infrazione è prevista la sospensione della patente da 1 a 3 mesi.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- Guida in stato di ebbrezza -->
+            <div class="blog-card" data-category="sanzioni">
+                <div class="card-visual visual-sanzioni"><span>⚠️</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Sanzioni</span>
+                        <span class="card-date">Gennaio 2026</span>
+                    </div>
+                    <h3>Guida in stato di ebbrezza: tasso zero per i neopatentati</h3>
+                    <p>Per i conducenti con patente conseguita da meno di 3 anni vige il tasso alcolemico pari a zero.
+                        Nessuna tolleranza: qualsiasi valore oltre lo zero comporta ritiro immediato della patente.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- Autovelox -->
+            <div class="blog-card" data-category="tecnologia">
+                <div class="card-visual visual-tecnologia"><span>📡</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Tecnologia</span>
+                        <span class="card-date">Aprile 2026</span>
+                    </div>
+                    <h3>Autovelox: nuove regole sulla segnalazione preventiva</h3>
+                    <p>La Corte Costituzionale ha stabilito che ogni autovelox fisso deve essere preceduto da apposita
+                        segnaletica a distanza minima di 1 km. I Comuni sono tenuti ad adeguarsi entro 6 mesi.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- ZTL e veicoli elettrici -->
+            <div class="blog-card" data-category="ambiente">
+                <div class="card-visual visual-ambiente"><span>🌿</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Ambiente</span>
+                        <span class="card-date">Marzo 2026</span>
+                    </div>
+                    <h3>ZTL e veicoli elettrici: nuovi accessi nelle città</h3>
+                    <p>Le principali città italiane ampliano le ZTL riservando corsie e parcheggi gratuiti ai veicoli
+                        elettrici e ibridi plug-in. Le auto Euro 4 diesel saranno escluse dalle aree urbane entro la
+                        fine del 2026.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- Patente per moto -->
+            <div class="blog-card" data-category="sicurezza">
+                <div class="card-visual visual-moto"><span>🏍️</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Sicurezza</span>
+                        <span class="card-date">Febbraio 2026</span>
+                    </div>
+                    <h3>Patente A2: obbligo casco omologato e gilet ad alta visibilità</h3>
+                    <p>Dal 2026 i titolari di patente A2 sono tenuti ad indossare sempre il gilet catarifrangente in
+                        caso di sosta di emergenza su strade extraurbane, pena sanzione amministrativa.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- Neopatentati -->
+            <div class="blog-card" data-category="sicurezza">
+                <div class="card-visual visual-giovani"><span>🎓</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Sicurezza</span>
+                        <span class="card-date">Gennaio 2026</span>
+                    </div>
+                    <h3>Neopatentati: limite di 100 km/h in autostrada prorogato a 4 anni</h3>
+                    <p>Il periodo di restrizioni per i neopatentati è stato esteso da 3 a 4 anni. Nei primi 4 anni dalla
+                        patente B è vietato superare i 100 km/h in autostrada e i 90 km/h sulle strade extraurbane.</p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+            <!-- Monopattini -->
+            <div class="blog-card" data-category="tecnologia">
+                <div class="card-visual visual-tecnologia"><span>🛴</span></div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <span class="card-tag">Tecnologia</span>
+                        <span class="card-date">Marzo 2026</span>
+                    </div>
+                    <h3>Monopattini elettrici: targa e assicurazione obbligatoria</h3>
+                    <p>Dal 2026 tutti i monopattini elettrici devono essere dotati di targa identificativa e copertura
+                        assicurativa RC. I Comuni potranno limitarne la circolazione nelle ZTL e nelle aree pedonali.
+                    </p>
+                    <a href="{{ url_for('contatti') }}" class="btn btn-outline">Leggi di più →</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <h2>Hai dubbi sulla normativa stradale?</h2>
+            <p>I nostri esperti sono disponibili per risponderti rapidamente.</p>
+            <a href="{{ url_for('contatti') }}" class="btn-cta">💬 Scrivici su WhatsApp</a>
+        </div>
+    </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+
+    <div class="footer-inner">
+      <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+        <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano" class="footer-logo">
+      </a>
+      <div class="footer-links">
+        <a href="{{ url_for('corsi') }}">Corsi</a>
+        <a href="{{ url_for('CQC') }}">CQC</a>
+        <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+        <a href="{{ url_for('patenti') }}">Patenti</a>
+        <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+        <a href="{{ url_for('blog') }}">Blog</a>
+        <a href="{{ url_for('contatti') }}">Contatti</a>
+        <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+    </div>
+  </footer>
+
+    <script>
+        // ── FILTER ──
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+
+                // featured post
+                const featured = document.querySelector('.blog-featured');
+                if (featured) {
+                    featured.style.display = (filter === 'all' || featured.dataset.category === filter) ? '' : 'none';
+                }
+
+                // regular cards
+                document.querySelectorAll('.blog-card').forEach(card => {
+                    const show = filter === 'all' || card.dataset.category === filter;
+                    card.classList.toggle('hidden', !show);
+                });
+            });
+        });
+
+        // ── HAMBURGER ──
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("nav-links");
+        hamburger.addEventListener("click", e => { e.stopPropagation(); navLinks.classList.toggle("active"); });
+        document.addEventListener("click", e => {
+            if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) navLinks.classList.remove("active");
+        });
+
+        // ── SEARCH ──
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        const pages = [
+            { title: "Patente AM", url: "{{ url_for('patenti') }}", keywords: ["ciclomotori", "50cc", "motorino"] },
+            { title: "Patente A1", url: "{{ url_for('patenti') }}", keywords: ["moto 125", "a1", "motociclo leggero"] },
+            { title: "Patente A2", url: "{{ url_for('patenti') }}", keywords: ["moto media", "a2", "limitata"] },
+            { title: "Patente A", url: "{{ url_for('patenti') }}", keywords: ["moto", "illimitata", "patente moto"] },
+            { title: "Patente B1", url: "{{ url_for('patenti') }}", keywords: ["quadriciclo", "b1", "microcar"] },
+            { title: "Patente B", url: "{{ url_for('patenti') }}", keywords: ["auto", "macchina", "patente b"] },
+            { title: "Patente B96", url: "{{ url_for('patenti') }}", keywords: ["b96", "rimorchio", "caravan b"] },
+            { title: "Patente BE", url: "{{ url_for('patenti') }}", keywords: ["be", "rimorchio pesante", "caravan grande"] },
+            { title: "Patente KB", url: "{{ url_for('patenti') }}", keywords: ["kb", "conversione patente", "patente estera"] },
+            { title: "Patente C1", url: "{{ url_for('patenti') }}", keywords: ["furgone grande", "c1", "7500 kg"] },
+            { title: "Patente C1E", url: "{{ url_for('patenti') }}", keywords: ["c1e", "furgone rimorchio"] },
+            { title: "Patente C", url: "{{ url_for('patenti') }}", keywords: ["camion", "mezzi pesanti", "trasporto merci"] },
+            { title: "Patente D1", url: "{{ url_for('patenti') }}", keywords: ["minibus", "d1", "pulmino"] },
+            { title: "Patente D1E", url: "{{ url_for('patenti') }}", keywords: ["d1e", "minibus rimorchio"] },
+            { title: "Patente D", url: "{{ url_for('patenti') }}", keywords: ["autobus", "trasporto persone", "pullman"] },
+            { title: "Corsi CQC", url: "{{ url_for('CQC') }}", keywords: ["cqc merci", "cqc persone", "carta qualificazione conducente"] },
+            { title: "Rinnovo patente CQC", url: "{{ url_for('CQC') }}", keywords: ["rinnovo cqc", "formazione periodica", "35 ore"] },
+            { title: "Conseguimento patente CQC", url: "{{ url_for('CQC') }}", keywords: ["corso cqc", "abilitazione professionale"] },
+            { title: "Contatti", url: "{{ url_for('contatti') }}", keywords: ["telefono", "email", "whatsapp", "indirizzo"] },
+            { title: "Chi siamo", url: "{{ url_for('chi_siamo') }}", keywords: ["scuola guida", "staff", "informazioni"] },
+            { title: "Servizi patente", url: "{{ url_for('servizisupatente') }}", keywords: ["servizi", "pratiche patente"] },
+            { title: "Patente internazionale", url: "{{ url_for('servizisupatente') }}", keywords: ["patente estero", "permesso internazionale"] },
+            { title: "Visita medica CML", url: "{{ url_for('servizisupatente') }}", keywords: ["commissione medica locale", "visita patente"] },
+            { title: "Revisione patente", url: "{{ url_for('servizisupatente') }}", keywords: ["esame revisione", "controllo patente"] },
+            { title: "Ripristino patente", url: "{{ url_for('servizisupatente') }}", keywords: ["recupero patente", "sospensione"] },
+            { title: "Duplicato patente", url: "{{ url_for('servizisupatente') }}", keywords: ["smarrimento patente", "furto patente"] },
+            { title: "Riclassificazione patente", url: "{{ url_for('servizisupatente') }}", keywords: ["conversione categoria", "upgrade patente"] },
+            { title: "Corsi Teoria", url: "{{ url_for('corsi') }}", keywords: ["lezioni teoria", "quiz patente", "esame teoria"] },
+            { title: "Corsi ADR", url: "{{ url_for('corsi') }}", keywords: ["adr", "merci pericolose", "trasporto adr", "patentino adr", "corso adr", "sicurezza trasporto"] },
+            { title: "Guide pratiche", url: "{{ url_for('corsi') }}", keywords: ["lezioni guida", "istruttore", "guida auto"] },
+            { title: "Recupero punti", url: "{{ url_for('corsi') }}", keywords: ["punti patente", "corso recupero punti"] },
+            { title: "Rinnovo patente", url: "{{ url_for('corsi') }}", keywords: ["scadenza patente", "rinnovo patente"] },
+            { title: "Conversione patente estera", url: "{{ url_for('corsi') }}", keywords: ["patente straniera", "conversione patente"] },
+            { title: "Parlano di noi", url: "{{ url_for('parlanodinoi') }}", keywords: ["recensioni", "opinioni", "clienti"] },
+            { title: "Parco macchine", url: "{{ url_for('macchine') }}", keywords: ["mezzi", "macchine", "moto"] }
+        ];
+
+        searchInput.addEventListener("input", () => {
+            const q = searchInput.value.toLowerCase().trim();
+            searchResults.innerHTML = "";
+            if (!q) { searchResults.classList.remove("active"); return; }
+            const filtered = pages.filter(p => p.title.toLowerCase().includes(q) || p.keywords.some(k => k.includes(q)));
+            filtered.forEach(p => {
+                const li = document.createElement("li");
+                li.textContent = p.title;
+                li.onclick = () => window.location.href = p.url;
+                searchResults.appendChild(li);
+            });
+            searchResults.classList.toggle("active", filtered.length > 0);
+        });
+
+        document.addEventListener("click", e => {
+            if (!document.getElementById("search-container").contains(e.target)) searchResults.classList.remove("active");
+        });
+
+        // ── SHRINK ──
+        window.addEventListener("scroll", () => {
+            document.querySelector("header").classList.toggle("shrink", window.scrollY > 50);
+        });
+    </script>
+
+</body>
+
+</html>

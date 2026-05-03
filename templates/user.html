@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User - Prenota Slot</title>
+
+    <style>
+        :root {
+            --primary: #004aad;
+            --primary-dark: #003080;
+            --accent: #ff6f00;
+            --green: #28a745;
+            --orange: #fd7e14;
+            --red: #dc3545;
+            --bg: #f0f4ff;
+            --card-bg: #ffffff;
+            --border: #d0d8e8;
+            --text: #1a1a2e;
+            --muted: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 74, 173, 0.97);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        header.shrink {
+            background: rgba(0, 74, 173, 0.85);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+        }
+
+        .nav-left h1 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        #search-container {
+            position: relative;
+            margin-top: 4px;
+        }
+
+        #search-input {
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: none;
+            font-size: 13px;
+            width: 200px;
+            outline: none;
+        }
+
+        #search-results {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            list-style: none;
+            margin: 4px 0 0;
+            padding: 4px 0;
+            width: 100%;
+            z-index: 200;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        #search-results.active {
+            display: block;
+        }
+
+        #search-results li {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        #search-results li:hover {
+            background: var(--bg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 14px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 22px;
+            user-select: none;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 18px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
+        }
+
+        .toast.success {
+            background: var(--green);
+        }
+
+        .toast.error {
+            background: var(--red);
+        }
+
+        .toast.info {
+            background: var(--primary);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        #profile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #profile-overlay.active {
+            display: flex;
+        }
+
+        #profile-modal {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px 28px 28px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        #profile-modal h2 {
+            margin: 0 0 6px;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        #profile-modal p {
+            margin: 0 0 20px;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .profile-field {
+            margin-bottom: 14px;
+        }
+
+        .profile-field label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .profile-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .profile-field input:focus {
+            border-color: var(--primary);
+            background: #fff;
+        }
+
+        .profile-field input.input-error {
+            border-color: var(--red);
+        }
+
+        .field-error {
+            font-size: 11px;
+            color: var(--red);
+            margin-top: 4px;
+            display: none;
+        }
+
+        .field-error.visible {
+            display: block;
+        }
+
+        .profile-modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #profile-modal .btn-save {
+            flex: 1;
+            padding: 11px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #profile-modal .btn-save:hover {
+            background: var(--primary-dark);
+        }
+
+        #profile-modal .btn-cancel-modal {
+            padding: 11px 18px;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #profile-modal .btn-cancel-modal:hover {
+            background: var(--bg);
+        }
+
+        .modal-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 12px;
+            color: #795548;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .profile-banner {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .profile-banner .profile-info {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .profile-banner .profile-info strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .profile-banner .btn-edit-profile {
+            padding: 7px 14px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .profile-banner .btn-edit-profile:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 0 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .filter-bar label {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: bold;
+        }
+
+        .filter-bar input[type="date"] {
+            padding: 7px 10px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+            outline: none;
+            background: var(--card-bg);
+        }
+
+        .slot-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .slot-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .slot-card.already-booked {
+            border-left: 4px solid var(--green);
+        }
+
+        .slot-card.is-full {
+            border-left: 4px solid var(--orange);
+            opacity: 0.85;
+        }
+
+        .slot-card.is-closed {
+            border-left: 4px solid var(--red);
+            opacity: 0.75;
+        }
+
+        .slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .slot-title {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .slot-meta {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .progress-wrap {
+            background: #e9ecef;
+            border-radius: 20px;
+            height: 8px;
+            margin: 6px 0 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-green {
+            background: var(--green);
+        }
+
+        .progress-orange {
+            background: var(--orange);
+        }
+
+        .progress-red {
+            background: var(--red);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-open {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-full {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-closed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-booked {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #b02a37;
+        }
+
+        .my-bookings-section {
+            margin-top: 36px;
+        }
+
+        .booking-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--green);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .booking-info {
+            font-size: 14px;
+        }
+
+        .booking-info span {
+            color: var(--muted);
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+
+        .empty-state .icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .logout-link {
+            display: inline-block;
+            margin: 24px 0;
+            color: var(--red);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                background: var(--primary);
+                height: 100%;
+                flex-direction: column;
+                width: 200px;
+                padding: 60px 20px 20px;
+                transition: 0.3s;
+                z-index: 150;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.55);
+            padding: 40px 20px 28px;
+            font-size: 0.875rem;
+        }
+
+        .footer-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: block;
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            /* Filtro per adattare il logo allo sfondo scuro */
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+            transition: opacity 0.25s;
+        }
+
+        .footer-logo:hover {
+            opacity: 0.85;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-copyright {
+            text-align: center;
+        }
+
+        .footer-copyright span {
+            color: var(--accent);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .why-card:nth-child(1) {
+            animation-delay: 0.04s;
+        }
+
+        .why-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .why-card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-wrap {
+                padding: 24px 20px;
+            }
+
+            .hero {
+                padding: 80px 20px 90px;
+            }
+
+            .footer-logo {
+                height: 52px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="toast-container"></div>
+
+    <div id="profile-overlay">
+        <div id="profile-modal">
+            <h2>📋 Completa il tuo profilo</h2>
+            <p>Per procedere con la prenotazione devi inserire il tuo numero di telefono e la tua email. Questi dati
+                verranno utilizzati solo dalla scuola guida per contattarti.</p>
+
+            <div class="modal-note">
+                ⚠️ Senza questi dati non sarà possibile effettuare prenotazioni.
+            </div>
+
+            <div class="profile-field">
+                <label>📞 Numero di telefono</label>
+                <input type="tel" id="modal-phone" placeholder="Es. 333 1234567">
+                <div class="field-error" id="error-phone">Inserisci un numero di telefono valido.</div>
+            </div>
+
+            <div class="profile-field">
+                <label>✉️ Indirizzo email</label>
+                <input type="email" id="modal-email" placeholder="Es. mario@email.com">
+                <div class="field-error" id="error-email">Inserisci un'email valida.</div>
+            </div>
+
+            <div class="profile-modal-actions">
+                <button class="btn-cancel-modal" id="modal-cancel-btn">Annulla</button>
+                <button class="btn-save" id="modal-save-btn">💾 Salva e prenota</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="navbar">
+            <div class="nav-left">
+                <h1>🚗 Autoscuola Martorano</h1>
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Cerca patenti o pagine...">
+                    <ul id="search-results"></ul>
+                </div>
+            </div>
+
+            <div class="hamburger" id="hamburger">☰</div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('corsi') }}">Corsi</a></li>
+                <li><a href="{{ url_for('CQC') }}">CQC</a></li>
+                <li><a href="{{ url_for('chi_siamo') }}">Chi siamo</a></li>
+                <li><a href="{{ url_for('patenti') }}">Patenti</a></li>
+                <li><a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contatti') }}">Contatti</a></li>
+                <li><a href="{{ url_for('servizisupatente') }}">Servizi</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="profile-banner" id="profile-banner" style="display:none;">
+            <div class="profile-info">
+                <strong>Il tuo profilo</strong>
+                <span id="profile-summary">Caricamento...</span>
+            </div>
+            <button class="btn-edit-profile" onclick="openProfileModal(null)">✏️ Modifica</button>
+        </div>
+
+        <h2 class="section-title">📅 Slot disponibili</h2>
+
+        <div class="filter-bar">
+            <label>Filtra per data:</label>
+            <input type="date" id="filter-date" onchange="applyFilter()">
+            <button class="btn btn-primary" onclick="resetFilter()" style="padding:6px 12px; font-size:12px;">✖
+                Reset</button>
+        </div>
+
+        <div id="slots-container"></div>
+
+        <div class="my-bookings-section">
+            <h2 class="section-title">🗂️ Le mie prenotazioni</h2>
+            <div id="my-bookings-container"></div>
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="logout-link">🚪 Logout</a>
+
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+
+        <div class="footer-inner">
+            <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+                <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano"
+                    class="footer-logo">
+            </a>
+            <div class="footer-links">
+                <a href="{{ url_for('corsi') }}">Corsi</a>
+                <a href="{{ url_for('CQC') }}">CQC</a>
+                <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+                <a href="{{ url_for('patenti') }}">Patenti</a>
+                <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+                <a href="{{ url_for('blog') }}">Blog</a>
+                <a href="{{ url_for('contatti') }}">Contatti</a>
+                <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Token CSRF iniettato da Jinja2
+        const CSRF_TOKEN = "{{ csrf_token() }}";
+
+        // Helper centralizzato per fetch con CSRF
+        function fetchWithCSRF(url, options = {}) {
+            const method = (options.method || 'GET').toUpperCase();
+            if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+                options.headers = Object.assign({}, options.headers, {
+                    'X-CSRF-Token': CSRF_TOKEN
+                });
+            }
+            options.credentials = 'include';
+            return fetch(url, options);
+        }
+
+        let allSlots = [];
+        let myBookedIds = new Set();
+        let userProfile = { phone: '', email: '' };
+        let pendingSlotId = null;
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        async function loadAll() {
+            await loadProfile();
+            await loadMyBookings();
+            await loadSlots();
+        }
+
+        async function loadProfile() {
+            try {
+                const res = await fetchWithCSRF('/my-profile');
+                if (!res.ok) return;
+                const data = await res.json();
+                userProfile = data;
+                updateProfileBanner();
+            } catch { /* silenzioso */ }
+        }
+
+        function updateProfileBanner() {
+            const banner = document.getElementById('profile-banner');
+            const summary = document.getElementById('profile-summary');
+
+            if (userProfile.phone || userProfile.email) {
+                banner.style.display = 'flex';
+                const parts = [];
+                if (userProfile.phone) parts.push('📞 ' + userProfile.phone);
+                if (userProfile.email) parts.push('✉️ ' + userProfile.email);
+                summary.textContent = parts.join('   ·   ');
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        function openProfileModal(slotId) {
+            pendingSlotId = slotId;
+            document.getElementById('modal-phone').value = userProfile.phone || '';
+            document.getElementById('modal-email').value = userProfile.email || '';
+            clearModalErrors();
+            document.getElementById('profile-overlay').classList.add('active');
+            document.getElementById('modal-phone').focus();
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-overlay').classList.remove('active');
+            pendingSlotId = null;
+        }
+
+        function clearModalErrors() {
+            document.getElementById('error-phone').classList.remove('visible');
+            document.getElementById('error-email').classList.remove('visible');
+            document.getElementById('modal-phone').classList.remove('input-error');
+            document.getElementById('modal-email').classList.remove('input-error');
+        }
+
+        async function saveProfile() {
+            clearModalErrors();
+
+            const phone = document.getElementById('modal-phone').value.trim();
+            const email = document.getElementById('modal-email').value.trim();
+
+            let valid = true;
+
+            if (!phone || !/^\+?[\d\s\-]{7,20}$/.test(phone)) {
+                document.getElementById('error-phone').classList.add('visible');
+                document.getElementById('modal-phone').classList.add('input-error');
+                valid = false;
+            }
+
+            if (!email || !/[^@]+@[^@]+\.[^@]+/.test(email)) {
+                document.getElementById('error-email').classList.add('visible');
+                document.getElementById('modal-email').classList.add('input-error');
+                valid = false;
+            }
+
+            if (!valid) return;
+
+            const saveBtn = document.getElementById('modal-save-btn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Salvataggio...';
+
+            try {
+                const res = await fetchWithCSRF('/save-profile', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, email })
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (!res.ok) {
+                    showToast(data.error || 'Errore nel salvataggio', 'error');
+                    return;
+                }
+
+                userProfile = { phone, email };
+                updateProfileBanner();
+                showToast('Profilo salvato!', 'success');
+
+                const slotToBook = pendingSlotId;
+                closeProfileModal();
+
+                if (slotToBook !== null) {
+                    await book(slotToBook);
+                }
+
+            } catch {
+                showToast('Errore di connessione', 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = '💾 Salva e prenota';
+            }
+        }
+
+        async function loadMyBookings() {
+            try {
+                const res = await fetchWithCSRF('/my-bookings');
+                const data = await res.json().catch(() => []);
+
+                if (!res.ok) {
+                    document.getElementById("my-bookings-container").innerHTML =
+                        `<div class="empty-state"><span class="icon">⚠️</span>Errore caricamento prenotazioni.</div>`;
+                    return;
+                }
+
+                myBookedIds = new Set(data.map(b => b.slot_id));
+                const container = document.getElementById("my-bookings-container");
+                container.innerHTML = "";
+
+                if (data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <span class="icon">📭</span>
+                            Non hai ancora nessuna prenotazione.
+                        </div>`;
+                    return;
+                }
+
+                data.forEach(b => {
+                    const div = document.createElement("div");
+                    div.classList.add("booking-item");
+                    div.id = `my-booking-${b.slot_id}`;
+                    div.innerHTML = `
+                        <div class="booking-info">
+                            <b>📅 ${b.date} — 🕐 ${b.time}</b>
+                            <span>Posti totali: ${b.max_people}</span>
+                        </div>
+                        <button class="btn btn-danger" onclick="cancelBooking(${b.slot_id})">
+                            ✖ Cancella
+                        </button>
+                    `;
+                    container.appendChild(div);
+                });
+
+            } catch {
+                document.getElementById("my-bookings-container").innerHTML =
+                    `<div class="empty-state"><span class="icon">⚠️</span>Errore di connessione.</div>`;
+            }
+        }
+
+        async function loadSlots() {
+            try {
+                const res = await fetchWithCSRF('/slots');
+                const data = await res.json().catch(() => []);
+
+                if (!res.ok) {
+                    showToast(data.error || "Errore caricamento slot", "error");
+                    return;
+                }
+
+                allSlots = data.sort((a, b) =>
+                    new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`)
+                );
+
+                applyFilter();
+
+            } catch {
+                showToast("Errore di connessione al server", "error");
+            }
+        }
+
+        function applyFilter() {
+            const dateFilter = document.getElementById("filter-date").value;
+            const filtered = dateFilter ? allSlots.filter(s => s.date === dateFilter) : allSlots;
+            renderSlots(filtered);
+        }
+
+        function resetFilter() {
+            document.getElementById("filter-date").value = "";
+            renderSlots(allSlots);
+        }
+
+        function renderSlots(slots) {
+            const container = document.getElementById("slots-container");
+            container.innerHTML = "";
+
+            const now = new Date();
+            const visible = slots.filter(s => new Date(`${s.date}T${s.time}`) >= now);
+
+            if (visible.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="icon">📭</span>
+                        Nessuno slot disponibile per la data selezionata.
+                    </div>`;
+                return;
+            }
+
+            visible.forEach(slot => {
+                const alreadyBooked = myBookedIds.has(slot.id);
+                const isFull = !slot.closed && slot.booked >= slot.max_people;
+                const isClosed = slot.closed;
+                const available = slot.max_people - slot.booked;
+                const pct = slot.max_people > 0
+                    ? Math.round((slot.booked / slot.max_people) * 100) : 0;
+
+                const barClass = pct >= 100 ? "progress-red"
+                    : pct >= 70 ? "progress-orange" : "progress-green";
+
+                let cardClass = "slot-card";
+                if (alreadyBooked) cardClass += " already-booked";
+                else if (isFull) cardClass += " is-full";
+                else if (isClosed) cardClass += " is-closed";
+
+                let badgeClass, badgeText;
+                if (alreadyBooked) { badgeClass = "status-booked"; badgeText = "✅ Prenotato"; }
+                else if (isClosed) { badgeClass = "status-closed"; badgeText = "🔒 Chiuso"; }
+                else if (isFull) { badgeClass = "status-full"; badgeText = "⚠️ Pieno"; }
+                else { badgeClass = "status-open"; badgeText = "🟢 Disponibile"; }
+
+                let actionBtn = "";
+                if (alreadyBooked) {
+                    actionBtn = `<button class="btn btn-danger" onclick="cancelBooking(${slot.id})">✖ Cancella prenotazione</button>`;
+                } else if (!isClosed && !isFull) {
+                    actionBtn = `<button class="btn btn-primary" onclick="handleBook(${slot.id})">📌 Prenota</button>`;
+                } else {
+                    actionBtn = `<button class="btn btn-primary" disabled>Non disponibile</button>`;
+                }
+
+                const div = document.createElement("div");
+                div.className = cardClass;
+                div.id = `slot-card-${slot.id}`;
+                div.innerHTML = `
+                    <div class="slot-header">
+                        <span class="slot-title">📅 ${slot.date} — 🕐 ${slot.time}</span>
+                        <span class="status-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                    <div class="slot-meta">
+                        👥 Posti liberi: <b>${available}</b> / ${slot.max_people}
+                        &nbsp;(${pct}% occupato)
+                    </div>
+                    <div class="progress-wrap">
+                        <div class="progress-bar ${barClass}" style="width:${Math.min(pct, 100)}%"></div>
+                    </div>
+                    ${actionBtn}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        async function handleBook(slot_id) {
+            if (!userProfile.phone || !userProfile.email) {
+                openProfileModal(slot_id);
+                return;
+            }
+            await book(slot_id);
+        }
+
+        async function book(slot_id) {
+            try {
+                const res = await fetchWithCSRF('/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slot_id })
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok) {
+                    showToast(data.message || "Prenotazione effettuata!", "success");
+                    loadAll();
+                } else if (data.error === 'PROFILE_REQUIRED') {
+                    openProfileModal(slot_id);
+                } else {
+                    showToast(data.error || "Errore prenotazione", "error");
+                }
+
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        async function cancelBooking(slot_id) {
+            if (!confirm("Vuoi cancellare questa prenotazione?")) return;
+
+            try {
+                const res = await fetchWithCSRF(`/cancel-booking/${slot_id}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok) {
+                    showToast(data.message || "Prenotazione cancellata", "success");
+                    loadAll();
+                } else {
+                    showToast(data.error || "Errore cancellazione", "error");
+                }
+
+            } catch {
+                showToast("Errore di connessione", "error");
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            loadAll();
+
+            document.getElementById('modal-save-btn').addEventListener('click', saveProfile);
+            document.getElementById('modal-cancel-btn').addEventListener('click', closeProfileModal);
+
+            document.getElementById('profile-overlay').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('profile-overlay')) closeProfileModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeProfileModal();
+            });
+
+            ['modal-phone', 'modal-email'].forEach(id => {
+                document.getElementById(id).addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') saveProfile();
+                });
+            });
+
+            const hamburger = document.getElementById("hamburger");
+            const navLinks = document.getElementById("nav-links");
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle("active");
+                });
+                document.addEventListener("click", (e) => {
+                    if (!navLinks.contains(e.target) && !hamburger.contains(e.target))
+                        navLinks.classList.remove("active");
+                });
+            }
+
+            const searchInput = document.getElementById("search-input");
+            const searchResults = document.getElementById("search-results");
+
+            if (searchInput) {
+                const pages = [
+                    { title: "Patente AM", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente A1", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente A2", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente A", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente B1", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente B", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente B96", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente BE", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente KB", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente C1", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente C1E", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente C", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente D1", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente D1E", url: "{{ url_for('patenti') }}" },
+                    { title: "Patente D", url: "{{ url_for('patenti') }}" },
+                    { title: "Corsi CQC", url: "{{ url_for('CQC') }}" },
+                    { title: "Contatti", url: "{{ url_for('contatti') }}" },
+                    { title: "Chi siamo", url: "{{ url_for('chi_siamo') }}" },
+                    { title: "Parlano di noi", url: "{{ url_for('parlanodinoi') }}" },
+                ];
+
+                searchInput.addEventListener("input", () => {
+                    const query = searchInput.value.toLowerCase();
+                    searchResults.innerHTML = "";
+                    if (!query) { searchResults.classList.remove("active"); return; }
+                    const filtered = pages.filter(p => p.title.toLowerCase().includes(query));
+                    filtered.forEach(p => {
+                        const li = document.createElement("li");
+                        li.textContent = p.title;
+                        li.onclick = () => window.location.href = p.url;
+                        searchResults.appendChild(li);
+                    });
+                    searchResults.classList.toggle("active", filtered.length > 0);
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchInput.contains(e.target)) searchResults.classList.remove("active");
+                });
+            }
+
+            window.addEventListener("scroll", () => {
+                const header = document.querySelector("header");
+                if (header) header.classList.toggle("shrink", window.scrollY > 50);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

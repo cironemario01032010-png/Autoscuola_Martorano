@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrazione | Autoscuola Martorano</title>
+
+    <style>
+        :root {
+            --primary: #004aad;
+            --accent: #ff6f00;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary), #1e3a8a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e65100;
+        }
+
+        .link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.55);
+            padding: 40px 20px 28px;
+            font-size: 0.875rem;
+        }
+
+        .footer-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: block;
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            /* Filtro per adattare il logo allo sfondo scuro */
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+            transition: opacity 0.25s;
+        }
+
+        .footer-logo:hover {
+            opacity: 0.85;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-copyright {
+            text-align: center;
+        }
+
+        .footer-copyright span {
+            color: var(--accent);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .why-card:nth-child(1) {
+            animation-delay: 0.04s;
+        }
+
+        .why-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .why-card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-wrap {
+                padding: 24px 20px;
+            }
+
+            .hero {
+                padding: 80px 20px 90px;
+            }
+
+            .footer-logo {
+                height: 52px;
+            }
+        }
+    </style>
+
+    <script>
+        const CSRF_TOKEN = "{{ csrf_token() }}";
+
+        async function register(event) {
+            event.preventDefault();
+
+            const errorBox = document.getElementById("error");
+            const successBox = document.getElementById("success");
+
+            errorBox.textContent = "";
+            successBox.textContent = "";
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('/register', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': CSRF_TOKEN
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok) {
+                    successBox.textContent = "Account creato con successo!";
+                    setTimeout(() => { window.location.href = "/"; }, 1200);
+                } else {
+                    errorBox.textContent = data.error || "Errore registrazione";
+                }
+
+            } catch (err) {
+                errorBox.textContent = "Errore di connessione al server";
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Registrazione</h2>
+        <p>Crea il tuo account per accedere ai servizi</p>
+
+        <div id="error" class="error"></div>
+        <div id="success" class="success"></div>
+
+        <form onsubmit="register(event)">
+            <input type="text" id="username" placeholder="Username" required autocomplete="username">
+            <input type="password" id="password" placeholder="Password" required autocomplete="new-password">
+            <button type="submit">Crea account</button>
+        </form>
+
+        <a href="{{ url_for('login_page') }}" class="link">Hai già un account? Accedi</a>
+
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+
+        <div class="footer-inner">
+            <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+                <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano"
+                    class="footer-logo">
+            </a>
+            <div class="footer-links">
+                <a href="{{ url_for('corsi') }}">Corsi</a>
+                <a href="{{ url_for('CQC') }}">CQC</a>
+                <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+                <a href="{{ url_for('patenti') }}">Patenti</a>
+                <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+                <a href="{{ url_for('blog') }}">Blog</a>
+                <a href="{{ url_for('contatti') }}">Contatti</a>
+                <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

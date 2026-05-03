@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Siamo | Autoscuola Martorano</title>
+    <meta name="description"
+        content="Scopri la storia, la missione e i valori della Autoscuola Martorano. Da 2 generazioni al tuo fianco per formare conducenti sicuri e responsabili.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #003a8c;
+            --primary-mid: #0052c2;
+            --primary-light: #1a6bff;
+            --accent: #ff6200;
+            --accent-warm: #ff8a00;
+            --dark: #090e1a;
+            --text: #1a2035;
+            --text-muted: #5a6480;
+            --surface: #ffffff;
+            --surface-2: #f4f6fb;
+            --border: #e2e8f6;
+            --radius: 18px;
+            --shadow-sm: 0 2px 12px rgba(0, 58, 140, 0.07);
+            --shadow-lg: 0 20px 60px rgba(0, 58, 140, 0.18);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface-2);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 74, 173, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s ease;
+        }
+
+        header.shrink .navbar {
+            padding: 0.45rem 24px;
+        }
+
+        header.shrink .nav-left h2 {
+            font-size: 17px;
+        }
+
+        .navbar {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 24px;
+            color: white;
+            transition: all 0.35s ease;
+            gap: 16px;
+        }
+
+        .nav-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .nav-left h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-left h2 span {
+            color: var(--accent);
+        }
+
+        #search-container {
+            position: relative;
+            width: 220px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.42rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        #search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        #search-input:focus {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        #search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            max-height: 260px;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+            z-index: 2000;
+            list-style: none;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: all 0.22s ease;
+        }
+
+        #search-results.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        #search-results li {
+            padding: 11px 14px;
+            cursor: pointer;
+            color: #111;
+            font-size: 0.88rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: 0.15s;
+        }
+
+        #search-results li:last-child {
+            border-bottom: none;
+        }
+
+        #search-results li:hover {
+            background: #f0f5ff;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            transition: 0.25s;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 260px;
+                background: var(--primary);
+                flex-direction: column;
+                padding-top: 90px;
+                gap: 1.8rem;
+                align-items: center;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -8px 0 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            #search-container {
+                width: 170px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #search-container {
+                width: 130px;
+            }
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(145deg, #001f5c 0%, #003494 45%, #0052c2 100%);
+            color: white;
+            text-align: center;
+            padding: 90px 24px 100px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 700px 400px at 20% 50%, rgba(255, 98, 0, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 20%, rgba(26, 107, 255, 0.15) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 98, 0, 0.18);
+            color: #ffb380;
+            border: 1px solid rgba(255, 98, 0, 0.3);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            animation: fadeDown 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+            animation: fadeDown 0.6s 0.1s ease both;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeDown 0.6s 0.2s ease both;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeDown 0.6s 0.3s ease both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .hero-stat span {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* ── PAGE BODY ── */
+        .page-body {
+            max-width: 1240px;
+            margin: 60px auto 80px;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* ── SPLIT CARD: visual + text ── */
+        .split-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            transition: box-shadow 0.3s, border-color 0.3s;
+            animation: cardIn 0.5s ease both;
+        }
+
+        .split-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 82, 194, 0.2);
+        }
+
+        .split-card.reverse {
+            grid-template-columns: 1fr 280px;
+        }
+
+        .split-card.reverse .split-visual {
+            order: 2;
+        }
+
+        .split-card.reverse .split-body {
+            order: 1;
+        }
+
+        .split-visual {
+            background: linear-gradient(145deg, #001f5c, #0052c2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+        }
+
+        .split-visual.green {
+            background: linear-gradient(145deg, #064e3b, #059669);
+        }
+
+        .split-visual.orange {
+            background: linear-gradient(145deg, #7c2d12, #ea580c);
+        }
+
+        .split-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .split-visual span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .split-body {
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(255, 98, 0, 0.08);
+            border: 1px solid rgba(255, 98, 0, 0.18);
+            border-radius: 50px;
+            padding: 4px 14px;
+            width: fit-content;
+        }
+
+        .split-body h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .split-body p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* ── VALUES GRID ── */
+        .values-section {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 40px;
+            animation: cardIn 0.5s 0.15s ease both;
+        }
+
+        .values-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .values-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.4px;
+            margin-top: 12px;
+        }
+
+        .values-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.65;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .value-item {
+            background: var(--surface-2);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 22px;
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+        }
+
+        .value-item:hover {
+            border-color: rgba(0, 82, 194, 0.25);
+            box-shadow: 0 8px 28px rgba(0, 58, 140, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .value-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 12px rgba(0, 82, 194, 0.25);
+        }
+
+        .value-item h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .value-item p {
+            font-size: 0.855rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── NUMBERS STRIP ── */
+        .numbers-strip {
+            background: linear-gradient(145deg, #001f5c, #003494 60%, #0052c2);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            padding: 50px 40px;
+            animation: cardIn 0.5s 0.2s ease both;
+        }
+
+        .numbers-strip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .numbers-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+
+        .number-item strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .number-item strong em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .number-item span {
+            display: block;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.55);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 8px;
+        }
+
+        .number-item p {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* ── SEDI CARD ── */
+        .sedi-section {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 40px;
+            animation: cardIn 0.5s 0.25s ease both;
+        }
+
+        .sedi-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .sedi-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(0, 82, 194, 0.3);
+            flex-shrink: 0;
+        }
+
+        .sedi-header div h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .sedi-header div p {
+            font-size: 0.87rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .sedi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .sede-pill {
+            background: var(--surface-2);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .sede-pill:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 16px rgba(0, 58, 140, 0.08);
+        }
+
+        .sede-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            flex-shrink: 0;
+        }
+
+        .sede-pill span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            background: linear-gradient(145deg, #001f5c 0%, #003494 60%, #0052c2 100%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 80px 24px;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1rem;
+            margin-bottom: 32px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 6px 24px rgba(255, 98, 0, 0.4);
+            transition: 0.25s;
+        }
+
+        .btn-cta:hover {
+            background: var(--accent-warm);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(255, 98, 0, 0.5);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.55);
+            padding: 40px 20px 28px;
+            font-size: 0.875rem;
+        }
+
+        .footer-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: block;
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+            /* Filtro per adattare il logo allo sfondo scuro */
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+            transition: opacity 0.25s;
+        }
+
+        .footer-logo:hover {
+            opacity: 0.85;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-copyright {
+            text-align: center;
+        }
+
+        .footer-copyright span {
+            color: var(--accent);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .why-card:nth-child(1) {
+            animation-delay: 0.04s;
+        }
+
+        .why-card:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .why-card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-wrap {
+                padding: 24px 20px;
+            }
+
+            .hero {
+                padding: 80px 20px 90px;
+            }
+
+            .footer-logo {
+                height: 52px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="nav-left">
+                <h2>Autoscuola <span>Martorano</span></h2>
+                <div id="search-container">
+                    <input type="text" id="search-input" placeholder="Cerca patenti o pagine…">
+                    <ul id="search-results"></ul>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('corsi') }}">Corsi</a></li>
+                <li><a href="{{ url_for('CQC') }}">CQC</a></li>
+                <li><a href="{{ url_for('chi_siamo') }}">Chi siamo</a></li>
+                <li><a href="{{ url_for('patenti') }}">Patenti</a></li>
+                <li><a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a></li>
+                <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                <li><a href="{{ url_for('contatti') }}">Contatti</a></li>
+                <li><a href="{{ url_for('servizisupatente') }}">Servizi</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Dal 1990 · Scuola Guida</div>
+            <h1>Chi <em>siamo</em>,<br>cosa ci guida.</h1>
+            <p>Da 2 generazioni formiamo conducenti sicuri, responsabili e pronti ad affrontare ogni strada con fiducia.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat"><strong>2</strong><span>generazioni</span></div>
+                <div class="hero-stat"><strong>4</strong><span>sedi operative</span></div>
+                <div class="hero-stat"><strong>100%</strong><span>assistenza</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-body">
+
+        <!-- ── STORIA ── -->
+        <div class="split-card">
+            <div class="split-visual"><span>🏫</span></div>
+            <div class="split-body">
+                <div class="section-label">📖 La nostra storia</div>
+                <h2>Due generazioni al volante</h2>
+                <p>L'Autoscuola Martorano nasce dalla passione per la guida sicura e dalla volontà di offrire un
+                    servizio serio e umano. Da oltre trent'anni accompagniamo i nostri studenti — dai giovanissimi ai
+                    professionisti — nel percorso verso la patente e oltre.</p>
+                <p>Ciò che ci ha sempre contraddistinto è il rapporto diretto con ogni cliente: non sei un numero, sei
+                    una persona con esigenze specifiche, e noi lo sappiamo.</p>
+            </div>
+        </div>
+
+        <!-- ── MISSIONE ── */
+        <div class="split-card reverse">
+            <div class="split-visual green"><span>🎯</span></div>
+            <div class="split-body">
+                <div class="section-label">🚀 La nostra missione</div>
+                <h2>Formare conducenti sicuri e consapevoli</h2>
+                <p>La nostra missione non si esaurisce nel superare un esame. Vogliamo che ogni persona che esce dalla nostra scuola guida sappia cosa fa, perché lo fa e come comportarsi in ogni situazione stradale, anche la più imprevista.</p>
+                <p>Crediamo nell'innovazione didattica, nell'attenzione al dettaglio e in un servizio burocratico rapido ed efficiente: perché il tempo dei nostri clienti è prezioso.</p>
+            </div>
+        </div>
+
+        <!-- ── NUMERI ── -->
+        <div class="numbers-strip">
+            <div class="numbers-inner">
+                <div class="number-item">
+                    <strong>35<em>+</em></strong>
+                    <span>anni di attività</span>
+                    <p>Dal 1990 al servizio del territorio</p>
+                </div>
+                <div class="number-item">
+                    <strong>4</strong>
+                    <span>sedi operative</span>
+                    <p>Sant'Arcangelo, Corleto, Viggiano, Marsico Vetere</p>
+                </div>
+                <div class="number-item">
+                    <strong>98<em>%</em></strong>
+                    <span>tasso di soddisfazione</span>
+                    <p>Basato sulle recensioni dei clienti</p>
+                </div>
+                <div class="number-item">
+                    <strong>15<em>+</em></strong>
+                    <span>categorie di patente</span>
+                    <p>Da AM a D, CQC e ADR</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── VALORI ── -->
+        <div class="values-section">
+            <div class="values-header">
+                <div class="section-label" style="margin:0 auto 12px;">✨ I nostri valori</div>
+                <h2>Perché scegliere Martorano</h2>
+                <p>Ogni scelta che facciamo — dall'istruttore che selezioniamo al modo in cui gestiamo le pratiche —
+                    riflette questi principi.</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">👨‍🏫</div>
+                    <h3>Staff qualificato</h3>
+                    <p>Istruttori certificati con anni di esperienza sul campo, formati per accompagnarti con pazienza e
+                        professionalità.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🎯</div>
+                    <h3>Percorsi personalizzati</h3>
+                    <p>Ogni studente ha il suo ritmo. Adattiamo lezioni e orari alle tue esigenze, non le nostre.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">⚡</div>
+                    <h3>Pratiche rapide</h3>
+                    <p>Rinnovi, duplicati, conversioni: gestiamo tutto in sede in modo telematico e veloce, senza code
+                        inutili.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🤝</div>
+                    <h3>Rapporto umano</h3>
+                    <p>Non siamo uno sportello. Ascoltiamo, consigliamo e troviamo insieme la soluzione più adatta a te.
+                    </p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">📱</div>
+                    <h3>Sempre reperibili</h3>
+                    <p>Disponibili via WhatsApp, telefono ed email. Una risposta rapida è parte del nostro servizio.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🏆</div>
+                    <h3>Risultati concreti</h3>
+                    <p>Il nostro obiettivo è il tuo successo all'esame. Le nostre percentuali di promozione parlano da
+                        sole.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── SEDI ── -->
+        <div class="sedi-section">
+            <div class="sedi-header">
+                <div class="sedi-icon">📍</div>
+                <div>
+                    <h2>Le nostre sedi</h2>
+                    <p>Operativi in tutta l'area della Basilicata meridionale</p>
+                </div>
+            </div>
+            <div class="sedi-grid">
+                <div class="sede-pill">
+                    <div class="sede-dot"></div><span>Sant'Arcangelo</span>
+                </div>
+                <div class="sede-pill">
+                    <div class="sede-dot"></div><span>Corleto Perticara</span>
+                </div>
+                <div class="sede-pill">
+                    <div class="sede-dot"></div><span>Viggiano</span>
+                </div>
+                <div class="sede-pill">
+                    <div class="sede-dot"></div><span>Marsico Vetere</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <h2>Vuoi saperne di più?</h2>
+            <p>Contattaci per una consulenza gratuita: siamo qui per te.</p>
+            <a href="{{ url_for('contatti') }}" class="btn-cta">💬 Scrivici su WhatsApp</a>
+        </div>
+    </section>
+    <!-- ── FOOTER ── -->
+    <footer>
+
+        <div class="footer-inner">
+            <a href="{{ url_for('index') }}" aria-label="Autoscuola Martorano – Home">
+                <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo Autoscuola Martorano"
+                    class="footer-logo">
+            </a>
+            <div class="footer-links">
+                <a href="{{ url_for('corsi') }}">Corsi</a>
+                <a href="{{ url_for('CQC') }}">CQC</a>
+                <a href="{{ url_for('chi_siamo') }}">Chi siamo</a>
+                <a href="{{ url_for('patenti') }}">Patenti</a>
+                <a href="{{ url_for('parlanodinoi') }}">Parlano di noi</a>
+                <a href="{{ url_for('blog') }}">Blog</a>
+                <a href="{{ url_for('contatti') }}">Contatti</a>
+                <a href="{{ url_for('servizisupatente') }}">Servizi</a>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-copyright">Tutti i diritti riservati. <span>Autoscuola Martorano</span>.</div>
+        </div>
+    </footer>
+
+    <script>
+        // ── HAMBURGER ──
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("nav-links");
+        hamburger.addEventListener("click", e => { e.stopPropagation(); navLinks.classList.toggle("active"); });
+        document.addEventListener("click", e => {
+            if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) navLinks.classList.remove("active");
+        });
+
+        // ── SEARCH ──
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        const pages = [
+            { title: "Patente AM", url: "{{ url_for('patenti') }}", keywords: ["ciclomotori", "50cc", "motorino"] },
+            { title: "Patente A1", url: "{{ url_for('patenti') }}", keywords: ["moto 125", "a1", "motociclo leggero"] },
+            { title: "Patente A2", url: "{{ url_for('patenti') }}", keywords: ["moto media", "a2", "limitata"] },
+            { title: "Patente A", url: "{{ url_for('patenti') }}", keywords: ["moto", "illimitata", "patente moto"] },
+            { title: "Patente B1", url: "{{ url_for('patenti') }}", keywords: ["quadriciclo", "b1", "microcar"] },
+            { title: "Patente B", url: "{{ url_for('patenti') }}", keywords: ["auto", "macchina", "patente b"] },
+            { title: "Patente B96", url: "{{ url_for('patenti') }}", keywords: ["b96", "rimorchio", "caravan b"] },
+            { title: "Patente BE", url: "{{ url_for('patenti') }}", keywords: ["be", "rimorchio pesante", "caravan grande"] },
+            { title: "Patente KB", url: "{{ url_for('patenti') }}", keywords: ["kb", "conversione patente", "patente estera"] },
+            { title: "Patente C1", url: "{{ url_for('patenti') }}", keywords: ["furgone grande", "c1", "7500 kg"] },
+            { title: "Patente C1E", url: "{{ url_for('patenti') }}", keywords: ["c1e", "furgone rimorchio"] },
+            { title: "Patente C", url: "{{ url_for('patenti') }}", keywords: ["camion", "mezzi pesanti", "trasporto merci"] },
+            { title: "Patente D1", url: "{{ url_for('patenti') }}", keywords: ["minibus", "d1", "pulmino"] },
+            { title: "Patente D1E", url: "{{ url_for('patenti') }}", keywords: ["d1e", "minibus rimorchio"] },
+            { title: "Patente D", url: "{{ url_for('patenti') }}", keywords: ["autobus", "trasporto persone", "pullman"] },
+            { title: "Corsi CQC", url: "{{ url_for('CQC') }}", keywords: ["cqc merci", "cqc persone", "carta qualificazione conducente"] },
+            { title: "Rinnovo patente CQC", url: "{{ url_for('CQC') }}", keywords: ["rinnovo cqc", "formazione periodica", "35 ore"] },
+            { title: "Conseguimento patente CQC", url: "{{ url_for('CQC') }}", keywords: ["corso cqc", "abilitazione professionale"] },
+            { title: "Contatti", url: "{{ url_for('contatti') }}", keywords: ["telefono", "email", "whatsapp", "indirizzo"] },
+            { title: "Chi siamo", url: "{{ url_for('chi_siamo') }}", keywords: ["scuola guida", "staff", "informazioni"] },
+            { title: "Servizi patente", url: "{{ url_for('servizisupatente') }}", keywords: ["servizi", "pratiche patente"] },
+            { title: "Patente internazionale", url: "{{ url_for('servizisupatente') }}", keywords: ["patente estero", "permesso internazionale"] },
+            { title: "Visita medica CML", url: "{{ url_for('servizisupatente') }}", keywords: ["commissione medica locale", "visita patente"] },
+            { title: "Revisione patente", url: "{{ url_for('servizisupatente') }}", keywords: ["esame revisione", "controllo patente"] },
+            { title: "Ripristino patente", url: "{{ url_for('servizisupatente') }}", keywords: ["recupero patente", "sospensione"] },
+            { title: "Duplicato patente", url: "{{ url_for('servizisupatente') }}", keywords: ["smarrimento patente", "furto patente"] },
+            { title: "Riclassificazione patente", url: "{{ url_for('servizisupatente') }}", keywords: ["conversione categoria", "upgrade patente"] },
+            { title: "Corsi Teoria", url: "{{ url_for('corsi') }}", keywords: ["lezioni teoria", "quiz patente", "esame teoria"] },
+            { title: "Corsi ADR", url: "{{ url_for('corsi') }}", keywords: ["adr", "merci pericolose", "trasporto adr", "patentino adr", "corso adr", "sicurezza trasporto"] },
+            { title: "Guide pratiche", url: "{{ url_for('corsi') }}", keywords: ["lezioni guida", "istruttore", "guida auto"] },
+            { title: "Recupero punti", url: "{{ url_for('corsi') }}", keywords: ["punti patente", "corso recupero punti"] },
+            { title: "Rinnovo patente", url: "{{ url_for('corsi') }}", keywords: ["scadenza patente", "rinnovo patente"] },
+            { title: "Conversione patente estera", url: "{{ url_for('corsi') }}", keywords: ["patente straniera", "conversione patente"] },
+            { title: "Parlano di noi", url: "{{ url_for('parlanodinoi') }}", keywords: ["recensioni", "opinioni", "clienti"] },
+            { title: "Parco macchine", url: "{{ url_for('macchine') }}", keywords: ["mezzi", "macchine", "moto"] }
+        ];
+
+        searchInput.addEventListener("input", () => {
+            const q = searchInput.value.toLowerCase().trim();
+            searchResults.innerHTML = "";
+            if (!q) { searchResults.classList.remove("active"); return; }
+            const filtered = pages.filter(p => p.title.toLowerCase().includes(q) || p.keywords.some(k => k.includes(q)));
+            filtered.forEach(p => {
+                const li = document.createElement("li");
+                li.textContent = p.title;
+                li.onclick = () => window.location.href = p.url;
+                searchResults.appendChild(li);
+            });
+            searchResults.classList.toggle("active", filtered.length > 0);
+        });
+
+        document.addEventListener("click", e => {
+            if (!document.getElementById("search-container").contains(e.target)) searchResults.classList.remove("active");
+        });
+
+        // ── SHRINK ──
+        window.addEventListener("scroll", () => {
+            document.querySelector("header").classList.toggle("shrink", window.scrollY > 50);
+        });
+    </script>
+
+</body>
+
+</html>
