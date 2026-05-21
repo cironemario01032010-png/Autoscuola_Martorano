@@ -60,7 +60,7 @@ EMAIL_PASS = os.getenv("EMAIL_PASS", "").strip()
 if not EMAIL_USER or not EMAIL_PASS:
     raise Exception("❌ EMAIL_USER o EMAIL_PASS mancanti nel file .env")
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'smtp.tiscali.it'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = EMAIL_USER
