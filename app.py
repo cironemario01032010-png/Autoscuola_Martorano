@@ -1014,42 +1014,52 @@ def send_message():
         return "Attendi prima di inviare un altro messaggio.", 429
 
     data = request.form
-    nome = sanitize_str(data.get("nome",     ""), 100)
-    email = sanitize_str(data.get("email",    ""), 254)
+    nome = sanitize_str(data.get("nome", ""), 100)
+    email = sanitize_str(data.get("email", ""), 254)
     telefono = sanitize_str(data.get("telefono", ""), 30)
-    patente = sanitize_str(data.get("patente",  ""), 50)
+    patente = sanitize_str(data.get("patente", ""), 50)
+    messaggio = sanitize_str(data.get("messaggio", ""), 1000)
 
     # Honeypot anti-bot
     if data.get("website"):
         return "Spam rilevato.", 400
 
-    if not nome or not email or not telefono or not patente:
-        return "Compila tutti i campi.", 400
+    if not nome or not email or not telefono or not messaggio:
+        return "Compila tutti i campi obbligatori.", 400
 
     if not _EMAIL_RE.match(email):
         return "Email non valida.", 400
 
-    # Controllo injection nei campi testuali (newline header injection)
-    for field in (nome, email, telefono, patente):
+    for field in (nome, email, telefono, patente, messaggio):
         if '\n' in field or '\r' in field:
             return "Dati non validi.", 400
 
     try:
         msg = Message(
-            subject=f"Nuova prenotazione - {patente}",
+            subject=f"Nuovo contatto dal sito - {nome}",
             recipients=[EMAIL_USER]
         )
-        msg.body = f"Nome: {nome}\nEmail: {email}\nTelefono: {telefono}\nPatente: {patente}"
+        msg.body = (
+            f"Nome: {nome}\n"
+            f"Email: {email}\n"
+            f"Telefono: {telefono}\n"
+            f"Patente richiesta: {patente if patente else 'Non specificata'}\n"
+            f"Messaggio: {messaggio}"
+        )
         mail.send(msg)
 
         msg2 = Message(
-            subject="Richiesta ricevuta - Scuola Guida Martorano",
+            subject="Richiesta ricevuta - Autoscuola Martorano",
             recipients=[email]
         )
         msg2.body = (
             f"Grazie {nome}!\n\n"
-            f"Abbiamo ricevuto la tua richiesta per la patente {patente}.\n"
-            "Ti contatteremo a breve."
+            f"Abbiamo ricevuto il tuo messaggio e ti contatteremo al più presto.\n\n"
+            f"Riepilogo della tua richiesta:\n"
+            f"Telefono: {telefono}\n"
+            f"Patente: {patente if patente else 'Non specificata'}\n"
+            f"Messaggio: {messaggio}\n\n"
+            f"Autoscuola Martorano"
         )
         mail.send(msg2)
 
