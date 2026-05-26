@@ -60,7 +60,7 @@ EMAIL_PASS = os.getenv("EMAIL_PASS", "").strip()
 if not EMAIL_USER or not EMAIL_PASS:
     raise Exception("❌ EMAIL_USER o EMAIL_PASS mancanti nel file .env")
 
-app.config['MAIL_SERVER'] = 'smtp.tiscali.it'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = EMAIL_USER
@@ -1004,6 +1004,15 @@ _contact_attempts: dict = {}
 _CONTACT_COOLDOWN = 60
 
 
+# =========================
+# CONTACT FORM
+# =========================
+
+# Rate limit contatti: 1 invio ogni 60 secondi per IP
+_contact_attempts: dict = {}
+_CONTACT_COOLDOWN = 60
+
+
 @app.route("/send", methods=["POST"])
 def send_message():
     ip = _get_client_ip()
@@ -1014,52 +1023,58 @@ def send_message():
         return "Attendi prima di inviare un altro messaggio.", 429
 
     data = request.form
-    nome = sanitize_str(data.get("nome", ""), 100)
-    email = sanitize_str(data.get("email", ""), 254)
-    telefono = sanitize_str(data.get("telefono", ""), 30)
-    patente = sanitize_str(data.get("patente", ""), 50)
-    messaggio = sanitize_str(data.get("messaggio", ""), 1000)
+    nome      = sanitize_str(data.get("nome",      ""), 100)
+    email     = sanitize_str(data.get("email",     ""), 254)
+    telefono  = sanitize_str(data.get("telefono",  ""), 30)
+    patente   = sanitize_str(data.get("patente",   ""), 50)
+    messaggio = sanitize_str(data.get("messaggio", ""), 2000)
 
     # Honeypot anti-bot
     if data.get("website"):
         return "Spam rilevato.", 400
 
-    if not nome or not email or not telefono or not messaggio:
-        return "Compila tutti i campi obbligatori.", 400
+    if not nome or not email or not telefono or not patente or not messaggio:
+        return "Compila tutti i campi.", 400
 
     if not _EMAIL_RE.match(email):
         return "Email non valida.", 400
 
-    for field in (nome, email, telefono, patente, messaggio):
+    # Controllo header injection sui campi a riga singola
+    for field in (nome, email, telefono, patente):
         if '\n' in field or '\r' in field:
             return "Dati non validi.", 400
 
+    # messaggio può contenere \n legittimi, blocca solo \r anomali
+    if '\r' in messaggio:
+        return "Dati non validi.", 400
+
     try:
+        # Email all'amministratore con tutti i dati
         msg = Message(
-            subject=f"Nuovo contatto dal sito - {nome}",
+            subject=f"Nuova richiesta - {patente} - {nome}",
             recipients=[EMAIL_USER]
         )
         msg.body = (
-            f"Nome: {nome}\n"
-            f"Email: {email}\n"
-            f"Telefono: {telefono}\n"
-            f"Patente richiesta: {patente if patente else 'Non specificata'}\n"
-            f"Messaggio: {messaggio}"
+            f"Nome:      {nome}\n"
+            f"Email:     {email}\n"
+            f"Telefono:  {telefono}\n"
+            f"Patente:   {patente}\n\n"
+            f"Messaggio:\n{messaggio}"
         )
         mail.send(msg)
 
+        # Email di conferma all'utente
         msg2 = Message(
-            subject="Richiesta ricevuta - Autoscuola Martorano",
+            subject="Richiesta ricevuta - Scuola Guida Martorano",
             recipients=[email]
         )
         msg2.body = (
-            f"Grazie {nome}!\n\n"
-            f"Abbiamo ricevuto il tuo messaggio e ti contatteremo al più presto.\n\n"
-            f"Riepilogo della tua richiesta:\n"
-            f"Telefono: {telefono}\n"
-            f"Patente: {patente if patente else 'Non specificata'}\n"
-            f"Messaggio: {messaggio}\n\n"
-            f"Autoscuola Martorano"
+            f"Gentile {nome},\n\n"
+            f"Abbiamo ricevuto la tua richiesta per la patente {patente}.\n\n"
+            f"Riepilogo del tuo messaggio:\n"
+            f"{messaggio}\n\n"
+            "Ti contatteremo al più presto.\n\n"
+            "Scuola Guida Martorano"
         )
         mail.send(msg2)
 
