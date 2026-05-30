@@ -15,6 +15,7 @@ import urllib.parse
 import secrets
 import hmac
 import hashlib
+from flask import send_from_directory
 
 # =========================
 # ENV LOAD (prima di tutto)
@@ -413,6 +414,11 @@ def expire_old_slots():
 # =========================
 # ROUTES BASE
 # =========================
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('.', 'sitemap.xml')
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -1023,10 +1029,10 @@ def send_message():
         return "Attendi prima di inviare un altro messaggio.", 429
 
     data = request.form
-    nome      = sanitize_str(data.get("nome",      ""), 100)
-    email     = sanitize_str(data.get("email",     ""), 254)
-    telefono  = sanitize_str(data.get("telefono",  ""), 30)
-    patente   = sanitize_str(data.get("patente",   ""), 50)
+    nome = sanitize_str(data.get("nome",      ""), 100)
+    email = sanitize_str(data.get("email",     ""), 254)
+    telefono = sanitize_str(data.get("telefono",  ""), 30)
+    patente = sanitize_str(data.get("patente",   ""), 50)
     messaggio = sanitize_str(data.get("messaggio", ""), 2000)
 
     # Honeypot anti-bot
